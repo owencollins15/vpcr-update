@@ -1,0 +1,84 @@
+<h3>Employee Positions</h3>
+
+
+  
+
+  <div class="positions-list">
+    @for (position of positions; track position.id) {
+      <div 
+        class="position-card"
+        [class.selected]="currentPosition === position">
+        
+        <div class="position-info">
+          <h4>{{ position.name }}</h4>
+          <p>Edit to assign responsibilities.</p>
+        </div>
+        
+        <div class="position-actions">
+          <button type="button" (click)="selectPos(position)">
+            {{ currentPosition === position ? 'Currently Editing' : 'Edit' }}
+          </button>
+          <button type="button" (click)="deletePos(position)">Delete</button>
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-state">
+        No positions created yet. Create one to get started!
+      </div>
+    }
+  </div>
+
+
+<hr />
+
+@if (currentPosition) {
+  <div class="responsibility-selector">
+    <h3>Editing: {{ currentPosition.name }}</h3>
+   <!-- <button type="button" (click)="saveCurrentPos()">💾 Save Changes</button>-->
+    
+    <hr />
+    
+
+    <h3>Employee Position:</h3>
+    
+    @for (cat of source; track cat.key) {
+      <section style="margin-bottom: 1rem;">
+        <h4>
+          {{cat.label}}
+        </h4>
+        <button type="button" (click)="addAll(cat.key)">
+          Add All
+        </button>
+      </section>
+      
+      @for (item of cat.items; track item) {
+        <button type="button" (click)="addItem(cat.key, item)">
+          {{item}}
+        </button>
+      }
+    }
+    
+    <hr />
+    
+    <h3>Selected</h3>
+    
+    @for (cat of selected; track cat.key) {
+      <section>
+        <h4>{{cat.key}}</h4>
+        <button type="button" (click)="removeAll(cat.key)">
+          Remove All
+        </button>
+      </section>
+      
+      @for (item of cat.items; track item) {
+        <button type="button" (click)="removeItem(cat.key, item)">
+          {{item}}
+        </button>
+      }
+    }
+  </div>
+} @else {
+  <div class="no-position-selected">
+    <p>↑↑↑ Select a position to add responsibilities ↑↑↑</p>
+  </div>
+}
