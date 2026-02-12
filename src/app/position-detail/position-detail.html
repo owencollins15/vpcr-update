@@ -1,52 +1,90 @@
-<h2>Position {{ positionId }} – Responsibilities</h2>
-
-<div class="container">
-
-  <!-- SOURCE LIST -->
-  <div class="panel">
-    <h3>Available</h3>
-
-    @for (cat of source; track cat.key) {
-      <button (click)="addAll(cat.key)">Add All</button>
-
-      <ul>
-        @for (item of cat.items; track item) {
-          <li>
-            {{ item }}
-            <button (click)="addItem(cat.key, item)">➜</button>
-          </li>
-        }
-      </ul>
-    }
+<div class="detail-container">
+  <!-- Header with back button -->
+  <div class="header">
+    <button type="button" class="back-btn" (click)="cancel()">
+      ← Back to Positions
+    </button>
+    <h2>{{ positionName }}</h2>
   </div>
 
-  <!-- SELECTED LIST -->
-  <div class="panel">
-    <h3>Selected</h3>
+  <h3>Position – Responsibilities</h3>
 
-    @if (selected.length === 0) {
-      <p>No responsibilities assigned</p>
-    }
+  <!-- Two column layout -->
+  <div class="responsibilities-container">
     
+    <!-- LEFT: Available Responsibilities -->
+    <div class="available-column">
+      <h4>Available</h4>
+      
+      @for (cat of source; track cat.key) {
+        <div class="category-section">
+          <button 
+            type="button" 
+            class="add-all-btn"
+            (click)="addAll(cat.key)">
+            Add All
+          </button>
 
- @for (cat of selected; track cat.key) {
+          <div class="items-list">
+            @for (item of cat.items; track item) {
+              <div class="item-row">
+                <span>{{ item }}</span>
+                <button 
+                  type="button" 
+                  class="arrow-btn"
+                  (click)="addItem(cat.key, item)">
+                  →
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
 
-  <!-- REMOVE ALL BUTTON -->
-  <button class="remove-all" (click)="removeAll(cat.key)">
-    Remove All
-  </button>
-
-  <ul>
-    @for (item of cat.items; track item) {
-      <li>
-        {{ item }}
-        <button class="remove" (click)="removeItem(cat.key, item)">X</button>
-      </li>
-    }
-  </ul>
-
-}
-
+    <!-- RIGHT: Selected Responsibilities -->
+    <div class="selected-column">
+      <h4>Selected</h4>
+      
+      @if (selected.length > 0) {
+        @for (cat of selected; track cat.key) {
+          <div class="category-section">
+            <button 
+              type="button" 
+              class="remove-all-btn"
+              (click)="removeAll(cat.key)">
+              Remove All
+            </button>
+            
+            <div class="selected-items">
+              @for (item of cat.items; track item) {
+                <div class="selected-item">
+                  <span>{{ item }}</span>
+                  <button 
+                    type="button" 
+                    class="remove-btn"
+                    (click)="removeItem(cat.key, item)">
+                    ✕
+                  </button>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      } @else {
+        <p class="empty-message">No responsibilities assigned</p>
+      }
+    </div>
+    
   </div>
 
+  <!-- Bottom action buttons -->
+  <div class="actions">
+    <button type="button" class="cancel-btn" (click)="cancel()">
+      Cancel
+    </button>
+    <button type="button" class="save-btn"(click)="wrapperFunction()">
+      💾 Save & Return
+    </button>
+  </div>
 </div>

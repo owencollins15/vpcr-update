@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Communication } from '../communication';
 
+type CategoryKey = 'selectedResponsibilities';
 
-export type CategoryKey = 'selectedResponsibilities';
-
-export interface SourceCategory{
+ interface SourceCategory{
   key: CategoryKey;
   label: string;
   items: string[];
 }
-export interface SelectedCategory{
+ interface SelectedCategory{
   key: CategoryKey;
   items: string[];
 }
@@ -17,12 +18,14 @@ export interface SelectedCategory{
 
 @Component({
   selector: 'app-position-detail',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './position-detail.html',
   styleUrl: './position-detail.scss',
 })
-export class PositionDetail {
-positionId!: number;
+export class PositionDetail implements OnInit {
+  positionId: number = 0;
+positionName: string = '';
+showMessage = false;
 
 source: SourceCategory[] = [{//source array
 
@@ -34,15 +37,28 @@ source: SourceCategory[] = [{//source array
     'Responsibility2',
     'Responsibility3',
     'Responsibility4',
-    'Editing'
+    'Responsibility5'
   ]
 }
 ];
-constructor(private route: ActivatedRoute){}
-
 selected: SelectedCategory[] = []; //selected array
 
+constructor(private route: ActivatedRoute, private router: Router, private communication: Communication){}
+ngOnInit(){
+  const id = this.route.snapshot.paramMap.get('id');
+  if(id){
+    this.positionId= Number(id);
+    this.positionName= `position${id}`;
+    this.loadSavedResponsibilities();
+  }
+}
 
+loadSavedResponsibilities(){
+  const saved = localStorage.getItem(`position_${this.positionId}`)
+  if(saved){
+    this.selected =JSON.parse(saved)
+  }
+}
 
 
 private ensureSelectedCategory(key: CategoryKey): SelectedCategory{  //allows lazy initialization
@@ -104,7 +120,29 @@ this.afterRemoveItem(categoryKey, item);
 console.log('Removed Item!')
 }
 
+saveAndReturn(){
+  localStorage.setItem(`position_${this.positionId}`, JSON.stringify(this.selected));
+  this.router.navigate(['/'], {
+    state: {
+      saved: true,
+      positionId: this.positionId
+    }
+  });
 
+}
+cancel(){
+  this.router.navigate(['/']);
+}
+
+saveMessage(){
+  const newMessage = 'Position has been saved.';
+  this.communication.updatedMessage(newMessage);
+}
+
+wrapperFunction(){      //wrapper function allows for the responsibilities to be saved to the position and for the message to be displayed after save button is pressed
+  this.saveMessage();
+  this.saveAndReturn();
+}
 afterAddItem(categoryKey: CategoryKey, item: string){
 
 }

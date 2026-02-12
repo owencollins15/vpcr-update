@@ -1,19 +1,14 @@
-<h3>Employee Positions</h3>
+<h2>Employee Positions</h2>
 
+<ul class="position-list">
+  @for (pos of positions; track pos.id) {
+    <li class="position-row" (click)="goToPosition(pos)">
+      <span class="name">{{ pos.name }}</span>
 
-  
-
- <ul class="position-list">
-  @for(pos of positions; track pos.id){
-    <li class="position-item" (click)="goToPosition(pos)"> 
-      {{pos.name}}
+      @if (lastSavedPositionId === pos.id) {
+        <span class="saved">✔ Responsibilities Saved</span>
+      }
     </li>
   }
- </ul>
-@if(!positions.length){
-  <p>No positions available</p>
-}
-
-<hr />
-
+</ul>
 <router-outlet></router-outlet>
