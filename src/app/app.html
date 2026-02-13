@@ -1,4 +1,6 @@
+@if (showPositionList) {
 <h2>Employee Positions</h2>
+<p>Select any position to assign and save responsibilities.</p>
 
 <ul class="position-list">
   @for (pos of positions; track pos.id) {
@@ -11,4 +13,5 @@
     </li>
   }
 </ul>
+}
 <router-outlet></router-outlet>

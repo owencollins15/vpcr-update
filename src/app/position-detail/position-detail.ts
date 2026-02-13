@@ -121,7 +121,7 @@ console.log('Removed Item!')
 }
 
 saveAndReturn(){
-  localStorage.setItem(`position_${this.positionId}`, JSON.stringify(this.selected));
+  localStorage.setItem(`position_${this.positionId}`, JSON.stringify(this.selected)); //localStorage API uses setItem to add values and read back the data saved to local storage , most commonly used for storing json constants
   this.router.navigate(['/'], {
     state: {
       saved: true,
@@ -131,10 +131,10 @@ saveAndReturn(){
 
 }
 cancel(){
-  this.router.navigate(['/']);
+  this.router.navigate(['/']); //navigates back to positions
 }
 
-saveMessage(){
+saveMessage(){  
   const newMessage = 'Position has been saved.';
   this.communication.updatedMessage(newMessage);
 }
@@ -159,5 +159,3 @@ afterRemoveAll(categoryKey: CategoryKey){
 
 }
 }
-
-
