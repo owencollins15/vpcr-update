@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface userEntry {
   id: number;
@@ -33,7 +33,7 @@ export class PositionUsers implements OnInit {
     if (id) {
       this.positionId = Number(id);
       this.positionName = `position${id}`;
-      this.loadSavedUsers(); // restores any previously saved users
+      this.loadSavedUsers(); // restores any previously saved users with saved data
     }
   }
 
@@ -48,7 +48,7 @@ export class PositionUsers implements OnInit {
     const trimmed = this.newUser.trim(); //removes trailing and leading whitespace from strings
     if (!trimmed) return;
     const newUser: userEntry = {
-      id: Date.now(),
+      id: Date.now(), //allows for users to have different id's, if there is two johns instead of removing both it will remove based on the id that is given by Date
       name: trimmed,
     };
     this.users = [...this.users, newUser]; // pushes new user into user array
@@ -67,7 +67,7 @@ export class PositionUsers implements OnInit {
     this.router.navigate(['/position', this.positionId]);
   }
   onEnter(event: KeyboardEvent) {
-    //lets ad user after hitting enter instead of clicking 'add user'
+    //lets us add user after hitting enter instead of clicking 'add user'
     if (event.key === 'Enter') this.addUser();
   }
 }

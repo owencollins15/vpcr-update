@@ -167,7 +167,7 @@ h3 {
   transition: all 0.2s;
 
   &:hover {
-    background: #7aa7ff;
+    border-color: #7aa7ff;
   }
 
   span {
@@ -177,17 +177,18 @@ h3 {
 }
 
 .remove-btn {
-  background: transparent;
+  background: #007bff;
   color: white;
-  border: 1px solid white;
+  border: none;
   border-radius: 4px;
-  padding: 4px 10px;
+  padding: 6px 14px;
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.2s;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #7aa7ff;
   }
 }
 
