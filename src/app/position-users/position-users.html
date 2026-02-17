@@ -1,0 +1,50 @@
+<div class="page-container">
+  <!-- Header -->
+  <div class="header-row">
+    <button class="btn btn-secondary" (click)="goBack()">← Back to {{ positionName }}</button>
+    <h2>{{ positionName }} – Users</h2>
+  </div>
+
+  <p class="subtitle">Add users assigned to this position.</p>
+
+  <!-- Save message -->
+  @if (showMessage) {
+    <div class="save-message">✅ Users saved successfully!</div>
+  }
+
+  <!-- Input row -->
+  <div class="input-row">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Enter user name..."
+      [(ngModel)]="newUser"
+      (keydown)="onEnter($event)"
+    />
+    <button class="btn btn-primary" (click)="addUser()">Add User</button>
+  </div>
+
+  <!-- Users list -->
+  <div class="users-panel">
+    <h5>
+      Assigned Users <span class="badge">{{ users.length }}</span>
+    </h5>
+
+    @if (users.length === 0) {
+      <div class="empty-state">No users assigned yet. Type a name above and click Add User.</div>
+    }
+
+    @for (user of users; track user.id) {
+      <div class="user-row">
+        <span class="user-name">{{ user.name }}</span>
+        <button class="btn btn-danger btn-sm" (click)="removeUser(user.id)">Remove</button>
+      </div>
+    }
+  </div>
+
+  <!-- Footer actions -->
+  <div class="footer-actions">
+    <button class="btn btn-secondary" (click)="goBack()">Cancel</button>
+    <button class="btn btn-primary" (click)="save()">Save</button>
+  </div>
+</div>

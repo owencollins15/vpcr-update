@@ -1,9 +1,7 @@
 <div class="detail-container">
   <!-- Header with back button -->
   <div class="header">
-    <button type="button" class="back-btn" (click)="cancel()">
-      ← Back to Positions
-    </button>
+    <button type="button" class="back-btn" (click)="cancel()">← Back to Positions</button>
     <h2>{{ positionName }}</h2>
   </div>
 
@@ -11,30 +9,19 @@
 
   <!-- Two column layout -->
   <div class="responsibilities-container">
-    
     <!-- LEFT: Available Responsibilities -->
     <div class="available-column">
       <h4>Available</h4>
-      
+
       @for (cat of source; track cat.key) {
         <div class="category-section">
-          <button 
-            type="button" 
-            class="add-all-btn"
-            (click)="addAll(cat.key)">
-            Add All
-          </button>
+          <button type="button" class="add-all-btn" (click)="addAll(cat.key)">Add All</button>
 
           <div class="items-list">
             @for (item of cat.items; track item) {
               <div class="item-row">
                 <span>{{ item }}</span>
-                <button 
-                  type="button" 
-                  class="arrow-btn"
-                  (click)="addItem(cat.key, item)">
-                  →
-                </button>
+                <button type="button" class="arrow-btn" (click)="addItem(cat.key, item)">→</button>
               </div>
             }
           </div>
@@ -45,25 +32,19 @@
     <!-- RIGHT: Selected Responsibilities -->
     <div class="selected-column">
       <h4>Selected</h4>
-      
+
       @if (selected.length > 0) {
         @for (cat of selected; track cat.key) {
           <div class="category-section">
-            <button 
-              type="button" 
-              class="remove-all-btn"
-              (click)="removeAll(cat.key)">
+            <button type="button" class="remove-all-btn" (click)="removeAll(cat.key)">
               Remove All
             </button>
-            
+
             <div class="selected-items">
               @for (item of cat.items; track item) {
                 <div class="selected-item">
                   <span>{{ item }}</span>
-                  <button 
-                    type="button" 
-                    class="remove-btn"
-                    (click)="removeItem(cat.key, item)">
+                  <button type="button" class="remove-btn" (click)="removeItem(cat.key, item)">
                     ✕
                   </button>
                 </div>
@@ -75,16 +56,12 @@
         <p class="empty-message">No responsibilities assigned</p>
       }
     </div>
-    
   </div>
 
   <!-- Bottom action buttons -->
   <div class="actions">
-    <button type="button" class="cancel-btn" (click)="cancel()">
-      Cancel
-    </button>
-    <button type="button" class="save-btn"(click)="wrapperFunction()">
-      💾 Save & Return
-    </button>
+    <button type="button" class="cancel-btn" (click)="cancel()">Cancel</button>
+    <button type="button" class="save-btn" (click)="wrapperFunction()">💾 Save & Return</button>
+    <button type="button" class="users-btn" (click)="goToUsers()">Assign User</button>
   </div>
 </div>
