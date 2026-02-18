@@ -5,11 +5,21 @@
     <h2>{{ positionName }} – Users</h2>
   </div>
 
-  <p class="subtitle">Add users assigned to this position.</p>
+  <p class="subtitle">Add position division and users under this position.</p>
+  <!-- Division Selector -->
+  <div class="form-group">
+    <label class="form-label">Division </label>
+    <select class="form-select" [(ngModel)]="selDivisionId">
+      <option [value]="0">-- Select Division --</option>
+      @for (division of div; track division.id) {
+        <option [value]="division.id">{{ division.name }}</option>
+      }
+    </select>
+  </div>
 
   <!-- Save message -->
   @if (showMessage) {
-    <div class="save-message">✅ Users saved successfully!</div>
+    <div class="save-message">✅ Users and Division saved successfully!</div>
   }
 
   <!-- Input row -->

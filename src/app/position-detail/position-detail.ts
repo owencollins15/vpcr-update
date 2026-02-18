@@ -56,6 +56,7 @@ export class PositionDetail implements OnInit {
       this.positionName = `position${id}`;
       this.loadSavedResponsibilities();
     }
+    console.log('responsibilities saved');
   }
 
   loadSavedResponsibilities() {
@@ -133,9 +134,12 @@ export class PositionDetail implements OnInit {
         positionId: this.positionId,
       },
     });
+    console.log('saved and returned');
   }
+
   cancel() {
     this.router.navigate(['/']); //navigates back to positions
+    console.log('cancel successful');
   }
 
   saveMessage() {
@@ -152,6 +156,7 @@ export class PositionDetail implements OnInit {
     this.saveMessage();
     this.saveAndReturn();
   }
+
   afterAddItem(categoryKey: CategoryKey, item: string) {}
 
   afterAddAll(categoryKey: CategoryKey) {}

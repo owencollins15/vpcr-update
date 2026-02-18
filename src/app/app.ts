@@ -5,10 +5,23 @@ import { Communication } from './communication';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs';
 
-interface Position {
+//Export allows me to call interfaces , const in position-users.ts
+export interface Position {
+  id: number;
+  name: string;
+  divisionId: number;
+}
+export interface Division {
   id: number;
   name: string;
 }
+export const DIVISIONS: Division[] = [
+  { id: 1, name: 'division 1' },
+  { id: 2, name: 'division 2' },
+  { id: 3, name: 'division 3' },
+  { id: 4, name: 'division 4' },
+  { id: 5, name: 'division 5' },
+];
 
 @Component({
   selector: 'app-root',
@@ -19,16 +32,16 @@ interface Position {
 export class App {
   positions: Position[] = [
     //positions array with json constants
-    { id: 1, name: 'position 1' },
-    { id: 2, name: 'position 2' },
-    { id: 3, name: 'position 3' },
-    { id: 4, name: 'position 4' },
-    { id: 5, name: 'position 5' },
-    { id: 6, name: 'position 6' },
-    { id: 7, name: 'position 7' },
-    { id: 8, name: 'position 8' },
-    { id: 9, name: 'position 9' },
-    { id: 10, name: 'position 10' },
+    { id: 1, name: 'position 1', divisionId: 0 },
+    { id: 2, name: 'position 2', divisionId: 0 },
+    { id: 3, name: 'position 3', divisionId: 0 },
+    { id: 4, name: 'position 4', divisionId: 0 },
+    { id: 5, name: 'position 5', divisionId: 0 },
+    { id: 6, name: 'position 6', divisionId: 0 },
+    { id: 7, name: 'position 7', divisionId: 0 },
+    { id: 8, name: 'position 8', divisionId: 0 },
+    { id: 9, name: 'position 9', divisionId: 0 },
+    { id: 10, name: 'position 10', divisionId: 0 },
   ];
   lastSavedPositionId: number | null = null; //can be either type number or type null , initialized as null
   showPositionList = true;
