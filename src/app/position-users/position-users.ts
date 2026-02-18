@@ -2,16 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Division, DIVISIONS, Position } from '../app';
+import { Division, DIVISIONS, Supervisor, SUPERVISORS } from '../app';
 
 interface userEntry {
   id: number;
   name: string;
-}
-
-interface positionAssignment {
-  divisionId: number;
-  users: userEntry[];
 }
 
 @Component({
@@ -27,6 +22,9 @@ export class PositionUsers implements OnInit {
 
   div: Division[] = DIVISIONS; //holds array of division objects imported from app.ts , this is what populates the drop down list
   selDivisionId: number = 0; //0 indicates no division has been selected
+
+  supervisor: Supervisor[] = SUPERVISORS; //holds array of supervisor objects imported from app.ts , this is what populates the drop down list
+  selSupervisorId: number = 0; //0 indicates no supervisor is selected
 
   users: userEntry[] = []; //users array
   newUser: string = ' ';
@@ -53,6 +51,7 @@ export class PositionUsers implements OnInit {
       //if found loads users back into the array with their saved data
       const data = JSON.parse(saved); //converts JSON string into a JavaScript Object ex. "users" is now users: [...]
       this.selDivisionId = data.divisionId || 0; //restores selected division and show the division previously selected in the dropdown
+      this.selSupervisorId = data.supervisorId || 0; //restores selected supervisor and shows the supervisor previously selected in the dropdown
       this.users = data.users || []; //restores users that were added, if data.users exist use it if no use empty array
     }
     console.log('assignment loaded');
@@ -81,6 +80,7 @@ export class PositionUsers implements OnInit {
     const assignment = {
       //assignment object
       divisionId: this.selDivisionId, //currently selected division
+      supervisorId: this.selSupervisorId,
       users: this.users, //users array
     };
     // saves assignment to local storage , then converts into a JSON string that is stored locally

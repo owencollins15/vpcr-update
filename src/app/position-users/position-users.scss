@@ -199,3 +199,31 @@
     box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
   }
 }
+
+.form-group1 {
+  margin-bottom: 1.25rem;
+}
+
+.form-label1 {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 0.4rem;
+}
+
+.form-select1 {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background: #fff;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
+  }
+}

@@ -17,6 +17,17 @@
     </select>
   </div>
 
+  <!-- supervisor Selector -->
+  <div class="form-group1">
+    <label class="form-label1">Supervisor </label>
+    <select class="form-select1" [(ngModel)]="selSupervisorId">
+      <option [value]="0">-- Select Supervisor --</option>
+      @for (supervisor of supervisor; track supervisor.id) {
+        <option [value]="supervisor.id">{{ supervisor.name }}</option>
+      }
+    </select>
+  </div>
+
   <!-- Save message -->
   @if (showMessage) {
     <div class="save-message">✅ Users and Division saved successfully!</div>
@@ -31,7 +42,7 @@
       [(ngModel)]="newUser"
       (keydown)="onEnter($event)"
     />
-    <button class="btn btn-primary" (click)="addUser()">➕Add User</button>
+    <button class="btn btn-primary" (click)="addUser()">+Add User</button>
   </div>
 
   <!-- Users list -->
