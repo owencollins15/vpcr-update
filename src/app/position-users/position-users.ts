@@ -24,7 +24,10 @@ export class PositionUsers implements OnInit {
   selDivisionId: number = 0; //0 indicates no division has been selected
 
   supervisor: Supervisor[] = SUPERVISORS; //holds array of supervisor objects imported from app.ts , this is what populates the drop down list
+  filteredSupervisors: Supervisor[] = []; //filtered results that appear in dropdown
   selSupervisorId: number = 0; //0 indicates no supervisor is selected
+  supervisorSearchQuery: string = ''; // takes whatever user types and filters those letters
+  showSupervisorDropdown: boolean = false;
 
   users: userEntry[] = []; //users array
   newUser: string = ' ';
@@ -50,11 +53,50 @@ export class PositionUsers implements OnInit {
     if (saved) {
       //if found loads users back into the array with their saved data
       const data = JSON.parse(saved); //converts JSON string into a JavaScript Object ex. "users" is now users: [...]
-      this.selDivisionId = data.divisionId || 0; //restores selected division and show the division previously selected in the dropdown
+      this.selDivisionId = data.divisionId || 0; //restores selected division and shows the division previously selected in the dropdown
       this.selSupervisorId = data.supervisorId || 0; //restores selected supervisor and shows the supervisor previously selected in the dropdown
       this.users = data.users || []; //restores users that were added, if data.users exist use it if no use empty array
+
+      if (this.selSupervisorId !== 0) {
+        const supervisors = this.supervisor.find((s) => s.id === this.selSupervisorId); // saves supervisor that was prev selected so when page reloads its still there
+        this.supervisorSearchQuery = supervisors ? supervisors.name : '';
+      }
     }
     console.log('assignment loaded');
+  }
+
+  filterSupervisors(): void {
+    // search logic
+    const query = this.supervisorSearchQuery.toLowerCase().trim(); //converts all letters to lower case , removes extra spaces
+    if (!query) {
+      this.filteredSupervisors = this.supervisor; //if search box is empty show all supervisors
+    } else {
+      this.filteredSupervisors = this.supervisor.filter(
+        (
+          s, //otherwise, filter the list to only characters typed in search box
+        ) => s.name.toLowerCase().includes(query),
+      );
+    }
+  }
+
+  selectSupervisor(supervisor: Supervisor): void {
+    //stores supervisor Id  that was just selected
+    this.selSupervisorId = supervisor.id;
+    this.supervisorSearchQuery = supervisor.name; //puts full name into box when clicked on
+    this.showSupervisorDropdown = false; //hides drop down because supervisor has already been selected
+    this.filteredSupervisors = []; //clears once selected
+  }
+
+  clearSupervisor(): void {
+    // X button for selected supervisor
+    this.selSupervisorId = 0; //resets to no supervisor selected
+    this.supervisorSearchQuery = ''; //clears box
+    this.filteredSupervisors = [];
+  }
+
+  getSelSupervisorName(): string {
+    const supervisor = this.supervisor.find((s) => s.id === this.selSupervisorId); //searches through supervisors to find one with matching id
+    return supervisor ? supervisor.name : ''; //if supervisor found return name , if not return empty string
   }
 
   addUser() {

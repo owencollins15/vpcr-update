@@ -49,6 +49,7 @@ export class PositionDetail implements OnInit {
     private router: Router,
     private communication: Communication,
   ) {}
+
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -56,7 +57,7 @@ export class PositionDetail implements OnInit {
       this.positionName = `position${id}`;
       this.loadSavedResponsibilities();
     }
-    console.log('responsibilities saved');
+    console.log('position selected');
   }
 
   loadSavedResponsibilities() {
@@ -68,7 +69,7 @@ export class PositionDetail implements OnInit {
 
   private ensureSelectedCategory(key: CategoryKey): SelectedCategory {
     //allows lazy initialization
-    let cat = this.selected.find((c) => c.key === key);
+    let cat = this.selected.find((c) => c.key === key); //cat constant created to load content after its selected , this function allows for when I click one of the action buttons , the buttons work
     if (!cat) {
       cat = { key, items: [] };
       this.selected.push(cat);
@@ -82,7 +83,6 @@ export class PositionDetail implements OnInit {
     if (!cat.items.includes(item)) {
       cat.items.push(item);
     }
-    this.afterAddItem(categoryKey, item);
     console.log('Item Added!');
   }
 
@@ -96,7 +96,6 @@ export class PositionDetail implements OnInit {
         selectedCat.items.push(item);
       }
     });
-    this.afterAddAll(categoryKey);
     console.log('All Items Added!');
   }
 
@@ -110,7 +109,6 @@ export class PositionDetail implements OnInit {
         selectedCat.items = selectedCat.items.filter((i) => i !== item);
       }
     });
-    this.afterRemoveAll(categoryKey);
     console.log('All Items Removed!');
   }
 
@@ -122,7 +120,6 @@ export class PositionDetail implements OnInit {
     if (cat.items.length === 0) {
       this.selected = this.selected.filter((c) => c.key !== categoryKey);
     }
-    this.afterRemoveItem(categoryKey, item);
     console.log('Removed Item!');
   }
 
@@ -134,7 +131,6 @@ export class PositionDetail implements OnInit {
         positionId: this.positionId,
       },
     });
-    console.log('saved and returned');
   }
 
   cancel() {
@@ -149,19 +145,13 @@ export class PositionDetail implements OnInit {
 
   goToUsers(): void {
     this.router.navigate(['/position', this.positionId, 'users']);
+    console.log('arrived at users');
   }
 
   wrapperFunction() {
     //wrapper function allows for the responsibilities to be saved to the position and for the message to be displayed after save button is pressed
     this.saveMessage();
     this.saveAndReturn();
+    console.log('save executed');
   }
-
-  afterAddItem(categoryKey: CategoryKey, item: string) {}
-
-  afterAddAll(categoryKey: CategoryKey) {}
-
-  afterRemoveItem(categoryKey: CategoryKey, item: string) {}
-
-  afterRemoveAll(categoryKey: CategoryKey) {}
 }

@@ -227,3 +227,65 @@
     box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
   }
 }
+// ── Search dropdown ───────────────────────────────────────
+.search-dropdown {
+  position: absolute;
+  width: calc(100% - 2rem);
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  margin-top: -4px;
+}
+
+.dropdown-item {
+  padding: 0.6rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:hover {
+    background: #f0f4ff;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+// ── Selected chip ─────────────────────────────────────────
+.selected-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #e3f2fd;
+  border: 1px solid #90caf9;
+  border-radius: 16px;
+  padding: 0.4rem 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #1976d2;
+
+  .chip-remove {
+    background: none;
+    border: none;
+    color: #1976d2;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    line-height: 1;
+
+    &:hover {
+      color: #d32f2f;
+    }
+  }
+}
+
+// ── Make form-group relative for dropdown positioning ─────
+.form-group {
+  position: relative;
+}

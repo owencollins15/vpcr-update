@@ -17,15 +17,36 @@
     </select>
   </div>
 
-  <!-- supervisor Selector -->
-  <div class="form-group1">
-    <label class="form-label1">Supervisor </label>
-    <select class="form-select1" [(ngModel)]="selSupervisorId">
-      <option [value]="0">-- Select Supervisor --</option>
-      @for (supervisor of supervisor; track supervisor.id) {
-        <option [value]="supervisor.id">{{ supervisor.name }}</option>
-      }
-    </select>
+  <!-- Supervisor searchable input -->
+  <div class="form-group">
+    <label class="form-label">Supervisor</label>
+    <input
+      type="text"
+      class="input-field"
+      placeholder="Search for a supervisor..."
+      [(ngModel)]="supervisorSearchQuery"
+      (input)="filterSupervisors()"
+      (focus)="showSupervisorDropdown = true"
+    />
+
+    <!-- Dropdown suggestions -->
+    @if (showSupervisorDropdown && filteredSupervisors.length > 0) {
+      <div class="search-dropdown">
+        @for (supervisor of filteredSupervisors; track supervisor.id) {
+          <div class="dropdown-item" (click)="selectSupervisor(supervisor)">
+            {{ supervisor.name }}
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Selected supervisor display -->
+    @if (selSupervisorId !== 0) {
+      <div class="selected-chip">
+        <span>{{ getSelSupervisorName() }}</span>
+        <button class="chip-remove" (click)="clearSupervisor()">✕</button>
+      </div>
+    }
   </div>
 
   <!-- Save message -->
@@ -52,7 +73,9 @@
     </h5>
 
     @if (users.length === 0) {
-      <div class="empty-state">No users assigned yet. Type a name above and click Add User.</div>
+      <div class="empty-state">
+        No users assigned yet. Type a name above and click Add User or press Enter.
+      </div>
     }
 
     @for (user of users; track user.id) {
@@ -63,7 +86,7 @@
     }
   </div>
 
-  <!-- Footer actions -->
+  <!-- exit buttons -->
   <div class="footer-actions">
     <button class="btn btn-secondary" (click)="goBack()">🚫 Cancel</button>
     <button class="btn btn-primary" (click)="save()">💾Save</button>
