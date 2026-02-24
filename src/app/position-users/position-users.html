@@ -5,50 +5,6 @@
     <h2>{{ positionName }} – Users</h2>
   </div>
 
-  <p class="subtitle">Add position division and users under this position.</p>
-  <!-- Division Selector -->
-  <div class="form-group">
-    <label class="form-label">Division </label>
-    <select class="form-select" [(ngModel)]="selDivisionId">
-      <option [value]="0">-- Select Division --</option>
-      @for (division of div; track division.id) {
-        <option [value]="division.id">{{ division.name }}</option>
-      }
-    </select>
-  </div>
-
-  <!-- Supervisor searchable input -->
-  <div class="form-group">
-    <label class="form-label">Supervisor</label>
-    <input
-      type="text"
-      class="input-field"
-      placeholder="Search for a supervisor..."
-      [(ngModel)]="supervisorSearchQuery"
-      (input)="filterSupervisors()"
-      (focus)="showSupervisorDropdown = true"
-    />
-
-    <!-- Dropdown suggestions -->
-    @if (showSupervisorDropdown && filteredSupervisors.length > 0) {
-      <div class="search-dropdown">
-        @for (supervisor of filteredSupervisors; track supervisor.id) {
-          <div class="dropdown-item" (click)="selectSupervisor(supervisor)">
-            {{ supervisor.name }}
-          </div>
-        }
-      </div>
-    }
-
-    <!-- Selected supervisor display -->
-    @if (selSupervisorId !== 0) {
-      <div class="selected-chip">
-        <span>{{ getSelSupervisorName() }}</span>
-        <button class="chip-remove" (click)="clearSupervisor()">✕</button>
-      </div>
-    }
-  </div>
-
   <!-- Save message -->
   @if (showMessage) {
     <div class="save-message">✅ Users and Division saved successfully!</div>

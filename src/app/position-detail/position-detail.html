@@ -1,7 +1,9 @@
 <div class="detail-container">
   <!-- Header with back button -->
   <div class="header">
-    <button type="button" class="back-btn" (click)="cancel()">← Back to Positions</button>
+    <button type="button" class="back-btn" (click)="cancel()">
+      ← Back to Position {{ positionId }}
+    </button>
     <h2>{{ positionName }}</h2>
   </div>
 
@@ -62,7 +64,7 @@
 
   <!-- Bottom action buttons -->
   <div class="actions">
-    <button type="button" class="cancel-btn" (click)="cancel()">🚫 Cancel</button>
+    <button type="button" class="cancel-btn" (click)="goBackToOverview()">🚫 Cancel</button>
     <button type="button" class="save-btn" (click)="wrapperFunction()">💾 Save & Return</button>
     <button type="button" class="users-btn" (click)="goToUsers()">👤Assign User</button>
   </div>

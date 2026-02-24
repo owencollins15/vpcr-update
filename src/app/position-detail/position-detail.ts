@@ -125,7 +125,7 @@ export class PositionDetail implements OnInit {
 
   saveAndReturn() {
     localStorage.setItem(`position_${this.positionId}`, JSON.stringify(this.selected)); //localStorage API uses setItem to add values and read back the data saved to local storage , most commonly used for storing json constants
-    this.router.navigate(['/'], {
+    this.router.navigate(['/position', this.positionId], {
       state: {
         saved: true,
         positionId: this.positionId,
@@ -134,7 +134,7 @@ export class PositionDetail implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/']); //navigates back to positions
+    this.router.navigate(['/position', this.positionId]); //navigates back to positions
     console.log('cancel successful');
   }
 
@@ -144,14 +144,18 @@ export class PositionDetail implements OnInit {
   }
 
   goToUsers(): void {
-    this.router.navigate(['/position', this.positionId, 'users']);
+    this.router.navigate(['/position', this.positionId, 'users']); //directs to users page from position page
     console.log('arrived at users');
   }
 
   wrapperFunction() {
     //wrapper function allows for the responsibilities to be saved to the position and for the message to be displayed after save button is pressed
     this.saveMessage();
+    this.router.navigate(['/position', this.positionId]);
     this.saveAndReturn();
     console.log('save executed');
+  }
+  goBackToOverview() {
+    this.router.navigate(['/position', this.positionId]);
   }
 }

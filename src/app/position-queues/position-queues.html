@@ -1,0 +1,59 @@
+<!-- Queues multi-select dropdown -->
+<div class="form-group">
+  <button class="btn-back" (click)="goBack()">← Back</button>
+  <h2>{{ positionName }}</h2>
+  <h4>Queues</h4>
+  <label class="form-label">Queues</label>
+
+  @if (showMessage) {
+    <div class="save-message">✅ Queue saved!</div>
+  }
+
+  <!-- Dropdown trigger -->
+  <div class="multi-select-trigger" (click)="toggleQueueDrop()">
+    <span class="trigger-text">
+      @if (selQueue.length === 0) {
+        -- Select Queues --
+      } @else {
+        {{ selQueue.length }} queue(s) selected
+      }
+    </span>
+    <span class="dropdown-arrow">▼</span>
+  </div>
+
+  <!-- Dropdown content -->
+  @if (showQueuesDropdown) {
+    <div class="multi-select-dropdown">
+      <!-- Add All / Remove All buttons -->
+      <div class="dropdown-actions">
+        <button class="btn-action-sm" (click)="addAllQueues()">Add All</button>
+        <button class="btn-action-sm" (click)="removeAllQueues()">Remove All</button>
+      </div>
+
+      <!-- Checkboxes -->
+      @for (queue of queue; track queue.id) {
+        <label class="checkbox-item">
+          <input type="checkbox" [checked]="isQueueSel(queue.id)" (change)="toggleQueue(queue)" />
+          <span>{{ queue.name }}</span>
+        </label>
+      }
+    </div>
+  }
+
+  <!-- Selected chips display -->
+  @if (selQueue.length > 0) {
+    <div class="chips-container">
+      @for (queue of selQueue; track queue.id) {
+        <div class="chip">
+          <span>{{ queue.name }}</span>
+          <button class="chip-remove" (click)="removeQueue(queue)">✕</button>
+        </div>
+      }
+    </div>
+  }
+
+  <div class="footer-actions">
+    <button class="btn-secondary" (click)="goBack()">Cancel</button>
+    <button class="btn-primary" (click)="saveQueues()">💾 Save</button>
+  </div>
+</div>

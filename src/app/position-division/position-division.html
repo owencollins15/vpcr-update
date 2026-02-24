@@ -1,0 +1,27 @@
+<div class="edit-container">
+  <button class="btn-back" (click)="goBack()">← Back</button>
+  <h2>{{ positionName }}</h2>
+  <h4>Edit Division</h4>
+
+  @if (showMessage) {
+    <div class="save-message">✅ Division saved!</div>
+  }
+
+  <div class="form-group">
+    <label class="form-label">Division</label>
+    <select class="form-select" [(ngModel)]="selDivisionId">
+      <option [value]="0">-- Select Division --</option>
+      @for (division of division; track division.id) {
+        <option [value]="division.id">{{ division.name }}</option>
+      }
+    </select>
+
+    <!-- DEBUG -->
+    <p>Selected: {{ selDivisionId }}</p>
+
+    <div class="footer-actions">
+      <button class="btn-secondary" (click)="goBack()">Cancel</button>
+      <button class="btn-primary" (click)="saveDiv()">💾 Save</button>
+    </div>
+  </div>
+</div>

@@ -37,6 +37,31 @@ export const SUPERVISORS: Supervisor[] = [
   { id: 5, name: 'supervisor 5' },
 ];
 
+export interface Queues {
+  id: number;
+  name: string;
+}
+
+export const QUEUES: Queues[] = [
+  { id: 1, name: 'queue1' },
+  { id: 2, name: 'queue2' },
+  { id: 3, name: 'queue3' },
+  { id: 4, name: 'queue4' },
+  { id: 5, name: 'queue5' },
+];
+
+export interface userEntry {
+  id: number;
+  name: string;
+}
+
+export interface PositionAssignment {
+  divisionId: number;
+  supervisorId: number;
+  queueIds: number[];
+  users: userEntry[];
+}
+
 @Component({
   selector: 'app-root',
   imports: [CommonModule, RouterOutlet],
