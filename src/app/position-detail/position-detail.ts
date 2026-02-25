@@ -24,7 +24,7 @@ interface SelectedCategory {
 export class PositionDetail implements OnInit {
   positionId: number = 0;
   positionName: string = '';
-  showMessage = false;
+  showMessage: boolean = false;
   //source array
   source: SourceCategory[] = [
     {
@@ -61,18 +61,21 @@ export class PositionDetail implements OnInit {
   }
 
   loadSavedResponsibilities() {
-    const saved = localStorage.getItem(`position_${this.positionId}`);
+    const saved = localStorage.getItem(`position_${this.positionId}`); //retrieves saved data from local storage for the current position
     if (saved) {
-      this.selected = JSON.parse(saved);
+      const data = JSON.parse(saved); //converts saved string into data object
+      if (data.selected) {
+        this.selected = data.selected; //loads saved data into selected array to display in position detail
+      }
     }
   }
 
   private ensureSelectedCategory(key: CategoryKey): SelectedCategory {
     //allows lazy initialization
-    let cat = this.selected.find((c) => c.key === key); //cat constant created to load content after its selected , this function allows for when I click one of the action buttons , the buttons work
+    let cat = this.selected.find((c) => c.key === key); //cat constant created to find the category in the selected array that matches the provided key
     if (!cat) {
-      cat = { key, items: [] };
-      this.selected.push(cat);
+      cat = { key, items: [] }; // if no responsibilities have been selected yet, a new category object is created with the provided key and an empty items array
+      this.selected.push(cat); //new object pushed into selected array to be used for storing selected responsibilities as they are added
     }
     return cat;
   }
@@ -123,39 +126,23 @@ export class PositionDetail implements OnInit {
     console.log('Removed Item!');
   }
 
-  saveAndReturn() {
-    localStorage.setItem(`position_${this.positionId}`, JSON.stringify(this.selected)); //localStorage API uses setItem to add values and read back the data saved to local storage , most commonly used for storing json constants
-    this.router.navigate(['/position', this.positionId], {
-      state: {
-        saved: true,
+  saveResponsibilities() {
+    localStorage.setItem(
+      `position_${this.positionId}`,
+      JSON.stringify({
         positionId: this.positionId,
-      },
-    });
+        selected: this.selected,
+      }),
+    ); //localStorage API uses setItem to add values and read back the data saved to local storage , most commonly used for storing json constants
+    this.showMessage = true;
+    setTimeout(() => {
+      this.showMessage = false;
+      this.cancel();
+    }, 1500);
   }
 
   cancel() {
     this.router.navigate(['/position', this.positionId]); //navigates back to positions
     console.log('cancel successful');
-  }
-
-  saveMessage() {
-    const newMessage = 'Position has been saved.';
-    this.communication.updatedMessage(newMessage);
-  }
-
-  goToUsers(): void {
-    this.router.navigate(['/position', this.positionId, 'users']); //directs to users page from position page
-    console.log('arrived at users');
-  }
-
-  wrapperFunction() {
-    //wrapper function allows for the responsibilities to be saved to the position and for the message to be displayed after save button is pressed
-    this.saveMessage();
-    this.router.navigate(['/position', this.positionId]);
-    this.saveAndReturn();
-    console.log('save executed');
-  }
-  goBackToOverview() {
-    this.router.navigate(['/position', this.positionId]);
   }
 }

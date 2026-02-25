@@ -2,7 +2,7 @@
   <!-- Header -->
   <button class="btn-back" (click)="goBack()">← Back to Positions</button>
   <h2>{{ positionName }}</h2>
-  <p class="subtitle">Overview and configuration</p>
+  <p class="subtitle">Overview</p>
 
   <!-- Responsibilities Section -->
   <div class="info-card">
@@ -30,7 +30,13 @@
       <button class="btn-edit" (click)="editDivision()">✏️ Edit</button>
     </div>
     <div class="card-body">
-      <p class="single-value">{{ division }}</p>
+      @if (division === '') {
+        <p class="empty-text">No division assigned</p>
+      } @else {
+        <div class="chips-display">
+          <span class="chip">{{ division }}</span>
+        </div>
+      }
     </div>
   </div>
 
@@ -41,7 +47,13 @@
       <button class="btn-edit" (click)="editSupervisor()">✏️ Edit</button>
     </div>
     <div class="card-body">
-      <p class="single-value">{{ supervisor }}</p>
+      @if (supervisor === '') {
+        <p class="empty-text">No supervisor assigned</p>
+      } @else {
+        <div class="chips-display">
+          <span class="chip">{{ supervisor }}</span>
+        </div>
+      }
     </div>
   </div>
 

@@ -96,13 +96,15 @@ export class PositionQueues {
 
   saveQueues() {
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
-    const existing = saved ? JSON.parse(saved) : {};
+    const existing = saved ? JSON.parse(saved) : {}; //if data is saved in local storage then it is parsed into existing, if not existing it is an empty object
 
     const queueIds: number[] = [];
     for (let i = 0; i < this.selQueue.length; i++) {
+      //loops through selected queues and pushes the queue ids into queueIds array to be saved in local storage
       queueIds.push(this.selQueue[i].id);
     }
     const assignment = {
+      //creates assignment object to save in local storage with position id, division id, supervisor id, queue ids, and users
       divisionId: existing.divisionId || 0,
       supervisorId: existing.supervisorId || 0,
       queueIds: queueIds,

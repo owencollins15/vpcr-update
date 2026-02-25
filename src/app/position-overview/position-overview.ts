@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DIVISIONS, SUPERVISORS, QUEUES, PositionAssignment, userEntry } from '../app';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-position-overview',
@@ -14,56 +15,71 @@ export class PositionOverview implements OnInit {
   positionName: string = ' ';
 
   responsibilities: string[] = [];
-  division: string = 'Not Set';
-  supervisor: string = 'Not Set';
+  division: string = '';
+  supervisor: string = '';
   queues: string[] = [];
   users: string[] = [];
 
+  private routeSub?: Subscription;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
-
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.positionId = Number(id);
-      this.positionName = `position${id}`;
-      this.loadPositionData();
-    }
-    console.log('position selected');
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
+  ngOnInit(): void {
+    // Subscribe to route params - this will trigger whenever we navigate to this route
+    this.routeSub = this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id) {
+        this.positionId = Number(id);
+        this.positionName = `position${id}`;
+        this.loadPositionData(); // Reload data every time
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Clean up subscription
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
+  }
+
   loadPositionData() {
-    const respData = localStorage.getItem(`position_${this.positionId}`);
+    //loads saved data that was stored in the local storage
+    const respData = localStorage.getItem(`position_${this.positionId}`); // use get item when parsing a string
     if (respData) {
-      const data = JSON.parse(respData);
+      const data = JSON.parse(respData); //converts respData string into data object
       const selectedCat = data.selected?.find((c: any) => c.key === 'selectedResponsibilities');
-      this.responsibilities = selectedCat?.items || [];
+      this.responsibilities = selectedCat?.items || []; //loads the responsibilities that were selected and stored in local storage, if there are none it will be an empty array
     }
     const assignData = localStorage.getItem(`position_assignment_${this.positionId}`);
     if (assignData) {
-      const data: PositionAssignment = JSON.parse(assignData);
+      const data: PositionAssignment = JSON.parse(assignData); //converts assignData into data object
 
-      const div = DIVISIONS.find((d) => d.id === data.divisionId);
-      this.division = div ? div.name : 'not set';
+      const div = DIVISIONS.find((d) => d.id === data.divisionId); //finds division that matches the division ID saved and stored in local storage
+      this.division = div ? div.name : '';
 
-      const sup = SUPERVISORS.find((s) => s.id === data.supervisorId);
-      this.supervisor = sup ? sup.name : 'not set';
+      const sup = SUPERVISORS.find((s) => s.id === data.supervisorId); //finds supervisor that matches the supervisor ID saved and stored in local storage
+      this.supervisor = sup ? sup.name : '';
 
-      this.queues = [];
+      this.queues = []; //clear queue before data is loaded
       if (data.queueIds) {
         for (let i = 0; i < data.queueIds.length; i++) {
-          const queue = QUEUES.find((q) => q.id === data.queueIds[i]);
+          //loops through queue ids
+          const queue = QUEUES.find((q) => q.id === data.queueIds[i]); //finds queue that matches the queue ID saved and stored in local storage
           if (queue) {
-            this.queues.push(queue.name);
+            this.queues.push(queue.name); //push queue name and display in position overview
           }
         }
       }
 
-      this.users = [];
+      this.users = []; //clear users before data is loaded
       if (data.users) {
         for (let i = 0; i < data.users.length; i++) {
-          this.users.push(data.users[i].name);
+          //loops through user ids
+          this.users.push(data.users[i].name); //push user name and display in position overview
         }
       }
     }

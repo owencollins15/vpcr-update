@@ -41,28 +41,39 @@ export class PositionDivision implements OnInit {
     }
   }
 
-  saveDiv(): void {
-    // Get existing assignment data
+  onDivisionChange(event: any) {
+    this.selDivisionId = Number(event.target.value);
+    console.log('Division changed to:', this.selDivisionId);
+  }
+
+  saveDiv() {
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
-    let existing: any = {};
+    const existing: PositionAssignment = saved
+      ? JSON.parse(saved)
+      : {
+          divisionId: 0,
+          supervisorId: 0,
+          queueIds: [],
+          users: [],
+        };
 
-    if (saved) {
-      existing = JSON.parse(saved);
-    }
-
-    // Build the complete assignment object
-    const assignment = {
+    const assignment: PositionAssignment = {
       divisionId: this.selDivisionId,
       supervisorId: existing.supervisorId || 0,
       queueIds: existing.queueIds || [],
       users: existing.users || [],
     };
 
+    console.log('SAVING Division - Position ID:', this.positionId);
+    console.log('Selected Division ID:', this.selDivisionId);
+    console.log('Assignment object to save:', assignment);
+    console.log('localStorage key:', `position_assignment_${this.positionId}`);
+
     localStorage.setItem(`position_assignment_${this.positionId}`, JSON.stringify(assignment));
 
-    // Verify it saved
+    // Verify it was saved
     const verify = localStorage.getItem(`position_assignment_${this.positionId}`);
-    console.log('Verified saved:', verify);
+    console.log('Verified saved data:', verify);
 
     this.showMessage = true;
     setTimeout(() => {

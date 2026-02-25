@@ -78,6 +78,11 @@ h2 {
 }
 
 // ── Content Styles ────────────────────────────────────────
+.card-body {
+  padding: 1.25rem;
+}
+
+// ── Content Styles ────────────────────────────────────────
 .empty-text {
   color: #999;
   font-style: italic;
@@ -85,11 +90,15 @@ h2 {
   margin: 0;
 }
 
-.single-value {
+.value-display {
   font-size: 1rem;
-  color: #333;
-  margin: 0;
+  color: #1976d2;
   font-weight: 500;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  background: #e3f2fd;
+  border-left: 3px solid #1976d2;
+  border-radius: 4px;
 }
 
 .item-list {
@@ -98,13 +107,17 @@ h2 {
   margin: 0;
 
   li {
-    padding: 0.5rem 0;
+    padding: 0.5rem 0.75rem;
     border-bottom: 1px solid #f0f0f0;
     color: #444;
     font-size: 0.95rem;
 
     &:last-child {
       border-bottom: none;
+    }
+
+    &:hover {
+      background: #f8f9fa;
     }
   }
 }
@@ -122,5 +135,6 @@ h2 {
     padding: 0.3rem 0.75rem;
     font-size: 0.85rem;
     color: #1976d2;
+    font-weight: 500;
   }
 }
