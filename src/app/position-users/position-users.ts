@@ -24,6 +24,8 @@ export class PositionUsers implements OnInit {
   positionId: number = 0;
   positionName: string = ' ';
 
+  selDivisionId: number = 0;
+
   users: userEntry[] = []; //users array
   newUser: string = ' ';
   showMessage: boolean = false;
@@ -71,15 +73,31 @@ export class PositionUsers implements OnInit {
     this.users = this.users.filter((u) => u.id !== id);
     console.log('user removed');
   }
+  save(): void {
+    const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
 
-  save() {
+    let divisionId = 0;
+    let supervisorId = 0;
+    let queueIds: number[] = [];
+
+    if (saved) {
+      const existing = JSON.parse(saved);
+      divisionId = existing.divisionId || 0;
+      supervisorId = existing.supervisorId || 0;
+      queueIds = existing.queueIds || [];
+    }
+
     const assignment = {
-      //assignment object
-      users: this.users, //users array
+      divisionId: divisionId,
+      supervisorId: supervisorId,
+      queueIds: queueIds,
+      users: this.users,
     };
-    // saves assignment to local storage , then converts into a JSON string that is stored locally
+
+    console.log('Saving this object:', assignment);
+
     localStorage.setItem(`position_assignment_${this.positionId}`, JSON.stringify(assignment));
-    //displays message
+
     this.showMessage = true;
     setTimeout(() => {
       this.showMessage = false;

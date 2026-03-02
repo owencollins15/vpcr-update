@@ -7,7 +7,7 @@
 
   <!-- Save message -->
   @if (showMessage) {
-    <div class="save-message">✅ Users and Division saved successfully!</div>
+    <div class="save-message">✅ User's saved successfully!</div>
   }
 
   <!-- Input row -->
@@ -25,7 +25,7 @@
   <!-- Users list -->
   <div class="users-panel">
     <h5>
-      Assigned Users <span class="badge">{{ users.length }}</span>
+      Assigned Users: <span class="badge">{{ users.length }}</span>
     </h5>
 
     @if (users.length === 0) {

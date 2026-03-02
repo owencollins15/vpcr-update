@@ -64,16 +64,7 @@ export class PositionDivision implements OnInit {
       users: existing.users || [],
     };
 
-    console.log('SAVING Division - Position ID:', this.positionId);
-    console.log('Selected Division ID:', this.selDivisionId);
-    console.log('Assignment object to save:', assignment);
-    console.log('localStorage key:', `position_assignment_${this.positionId}`);
-
     localStorage.setItem(`position_assignment_${this.positionId}`, JSON.stringify(assignment));
-
-    // Verify it was saved
-    const verify = localStorage.getItem(`position_assignment_${this.positionId}`);
-    console.log('Verified saved data:', verify);
 
     this.showMessage = true;
     setTimeout(() => {

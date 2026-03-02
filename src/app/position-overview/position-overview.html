@@ -4,6 +4,25 @@
   <h2>{{ positionName }}</h2>
   <p class="subtitle">Overview</p>
 
+  <!-- Users Section -->
+  <div class="info-card">
+    <div class="card-header">
+      <h3>Assigned Users</h3>
+      <button class="btn-edit" (click)="editUsers()">✏️ Edit</button>
+    </div>
+    <div class="card-body">
+      @if (users.length === 0) {
+        <p class="empty-text">No users assigned</p>
+      } @else {
+        <ul class="item-list">
+          @for (user of users; track user) {
+            <li>{{ user }}</li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+
   <!-- Responsibilities Section -->
   <div class="info-card">
     <div class="card-header">
@@ -72,25 +91,6 @@
             <span class="chip">{{ queue }}</span>
           }
         </div>
-      }
-    </div>
-  </div>
-
-  <!-- Users Section -->
-  <div class="info-card">
-    <div class="card-header">
-      <h3>Assigned Users</h3>
-      <button class="btn-edit" (click)="editUsers()">✏️ Edit</button>
-    </div>
-    <div class="card-body">
-      @if (users.length === 0) {
-        <p class="empty-text">No users assigned</p>
-      } @else {
-        <ul class="item-list">
-          @for (user of users; track user) {
-            <li>{{ user }}</li>
-          }
-        </ul>
       }
     </div>
   </div>

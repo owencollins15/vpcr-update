@@ -24,9 +24,8 @@ export class PositionOverview implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-  ) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-  }
+  ) {}
+
   ngOnInit(): void {
     // Subscribe to route params - this will trigger whenever we navigate to this route
     this.routeSub = this.route.paramMap.subscribe((params) => {
@@ -86,23 +85,23 @@ export class PositionOverview implements OnInit {
   }
 
   editResponsibilities() {
-    this.router.navigate(['/position', this.positionId, 'responsibilities']);
+    this.router.navigate(['/position', this.positionId, 'responsibilities']); //edit button for responsibilities, routes to responsibilities page
   }
 
   editDivision() {
-    this.router.navigate(['/position', this.positionId, 'division']);
+    this.router.navigate(['/position', this.positionId, 'division']); //edit button for division, routes to divisions page
   }
 
   editSupervisor() {
-    this.router.navigate(['/position', this.positionId, 'supervisor']);
+    this.router.navigate(['/position', this.positionId, 'supervisor']); //edit button for supervisor, routes to supervisors page
   }
 
   editQueues() {
-    this.router.navigate(['/position', this.positionId, 'queues']);
+    this.router.navigate(['/position', this.positionId, 'queues']); //edit button for queues, routes to queues page
   }
 
   editUsers() {
-    this.router.navigate(['/position', this.positionId, 'users']);
+    this.router.navigate(['/position', this.positionId, 'users']); //edit button for users, routes to users page
   }
 
   goBack() {
