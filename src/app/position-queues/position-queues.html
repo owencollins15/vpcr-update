@@ -1,59 +1,54 @@
-<!-- Queues multi-select dropdown -->
-<div class="form-group">
+<div class="page-container">
+  <!-- Header -->
   <button class="btn-back" (click)="goBack()">← Back</button>
   <h2>{{ positionName }}</h2>
-  <h4>Queues</h4>
-  <label class="form-label">Queues</label>
+  <h4>Assign Queues</h4>
 
+  <!-- Save message -->
   @if (showMessage) {
-    <div class="save-message">✅ Queue saved!</div>
+    <div class="save-message">✅ Queues saved!</div>
   }
 
-  <!-- Dropdown trigger -->
-  <div class="multi-select-trigger" (click)="toggleQueueDrop()">
-    <span class="trigger-text">
-      @if (selQueue.length === 0) {
-        -- Select Queues --
-      } @else {
-        {{ selQueue.length }} queue(s) selected
-      }
-    </span>
-    <span class="dropdown-arrow">▼</span>
-  </div>
+  <!-- Dual list container -->
+  <div class="dual-list-container">
+    <!-- LEFT: Available -->
+    <div class="list-panel">
+      <p class="panel-label">Available</p>
+      <button class="btn-add-all" (click)="addAllQueues()">Add All</button>
 
-  <!-- Dropdown content -->
-  @if (showQueuesDropdown) {
-    <div class="multi-select-dropdown">
-      <!-- Add All / Remove All buttons -->
-      <div class="dropdown-actions">
-        <button class="btn-action-sm" (click)="addAllQueues()">Add All</button>
-        <button class="btn-action-sm" (click)="removeAllQueues()">Remove All</button>
-      </div>
-
-      <!-- Checkboxes -->
-      @for (queue of queue; track queue.id) {
-        <label class="checkbox-item">
-          <input type="checkbox" [checked]="isQueueSel(queue.id)" (change)="toggleQueue(queue)" />
+      @for (queue of availableQueues; track queue.id) {
+        <div class="list-row">
           <span>{{ queue.name }}</span>
-        </label>
+          <button class="btn-arrow" (click)="addQueue(queue)">→</button>
+        </div>
+      }
+
+      @if (availableQueues.length === 0) {
+        <div class="empty-state">All queues assigned</div>
       }
     </div>
-  }
 
-  <!-- Selected chips display -->
-  @if (selQueue.length > 0) {
-    <div class="chips-container">
-      @for (queue of selQueue; track queue.id) {
-        <div class="chip">
+    <!-- RIGHT: Selected -->
+    <div class="list-panel">
+      <p class="panel-label">Selected</p>
+      <button class="btn-remove-all" (click)="removeAllQueues()">Remove All</button>
+
+      @if (selectedQueues.length === 0) {
+        <div class="empty-state">No queues assigned</div>
+      }
+
+      @for (queue of selectedQueues; track queue.id) {
+        <div class="list-row">
           <span>{{ queue.name }}</span>
-          <button class="chip-remove" (click)="removeQueue(queue)">✕</button>
+          <button class="btn-remove" (click)="removeQueue(queue)">✕</button>
         </div>
       }
     </div>
-  }
+  </div>
 
+  <!-- Footer -->
   <div class="footer-actions">
     <button class="btn-secondary" (click)="goBack()">Cancel</button>
-    <button class="btn-primary" (click)="saveQueues()">💾 Save</button>
+    <button class="btn-primary" (click)="save()">💾 Save</button>
   </div>
 </div>

@@ -14,9 +14,8 @@ export class PositionQueues {
   positionId: number = 0;
   positionName: string = ' ';
 
-  queue: Queues[] = QUEUES; //holds array of queues just like divisions did
-  selQueue: Queues[] = []; //0 indicates no queue selected
-  showQueuesDropdown: boolean = false; //false until select dropdown is clicked
+  availableQueues: Queues[] = [];
+  selectedQueues: Queues[] = [];
 
   showMessage: boolean = false;
 
@@ -35,58 +34,43 @@ export class PositionQueues {
   }
 
   loadSavedQueue() {
+    this.availableQueues = [...QUEUES];
+    this.selectedQueues = [];
+
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
     if (saved) {
       const data: PositionAssignment = JSON.parse(saved);
       if (data.queueIds && data.queueIds.length > 0) {
-        this.selQueue = [];
         for (let i = 0; i < data.queueIds.length; i++) {
-          const queue = QUEUES.find((q) => q.id === data.queueIds[i]);
+          const queueId = data.queueIds[i];
+          const queue = QUEUES.find((q) => q.id === queueId);
           if (queue) {
-            this.selQueue.push(queue);
+            this.selectedQueues.push(queue);
+            this.availableQueues = this.availableQueues.filter((q) => q.id !== queueId);
           }
         }
       }
     }
   }
 
-  toggleQueueDrop() {
-    this.showQueuesDropdown = !this.showQueuesDropdown; //toggles queue dropdown on click
-    console.log('dropdown opened');
-  }
-
-  isQueueSel(queueId: number) {
-    return this.selQueue.some((q) => q.id === queueId); //when checkbox is clicked for queues within dropdown ,  that queue id is selected and then saved if save is pressed
-  }
-
-  toggleQueue(queue: Queues) {
-    const index = this.selQueue.findIndex((q) => q.id === queue.id);
-    if (index > -1) {
-      const newQueue: Queues[] = [];
-      for (let i = 0; i < this.selQueue.length; i++) {
-        if (this.selQueue[i].id !== queue.id) {
-          newQueue.push(this.selQueue[i]);
-        }
-      }
-      this.selQueue = newQueue;
-    } else {
-      this.selQueue = [...this.selQueue, queue];
+  addQueue(queue: Queues) {
+    if (!this.selectedQueues.find((q) => q.id === queue.id)) {
+      this.selectedQueues = [...this.selectedQueues, queue];
     }
   }
 
   removeQueue(queue: Queues) {
-    this.selQueue = this.selQueue.filter((q) => q.id !== queue.id); // removes selected items through 'filter' function
-    console.log('queue removed');
+    this.selectedQueues = this.selectedQueues.filter((q) => q.id !== queue.id); // removes selected items through 'filter' function
   }
 
   addAllQueues() {
-    this.selQueue = [...QUEUES]; // adds every single queue
+    this.selectedQueues = [...QUEUES];
     console.log('all queues added');
   }
 
   removeAllQueues() {
-    this.selQueue = []; // removes all queues selected
-    console.log('all queues removed');
+    this.selectedQueues = [];
+    this.availableQueues = [...QUEUES];
   }
 
   goBack() {
@@ -94,24 +78,34 @@ export class PositionQueues {
     this.router.navigate(['/position', this.positionId]);
   }
 
-  saveQueues() {
+  save(): void {
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
-    const existing = saved ? JSON.parse(saved) : {}; //if data is saved in local storage then it is parsed into existing, if not existing it is an empty object
+
+    let divisionId = 0;
+    let supervisorId = 0;
+    let users: any[] = [];
+
+    if (saved) {
+      const existing = JSON.parse(saved);
+      divisionId = existing.divisionId || 0;
+      supervisorId = existing.supervisorId || 0;
+      users = existing.users || [];
+    }
 
     const queueIds: number[] = [];
-    for (let i = 0; i < this.selQueue.length; i++) {
-      //loops through selected queues and pushes the queue ids into queueIds array to be saved in local storage
-      queueIds.push(this.selQueue[i].id);
+    for (let i = 0; i < this.selectedQueues.length; i++) {
+      queueIds.push(this.selectedQueues[i].id);
     }
+
     const assignment = {
-      //creates assignment object to save in local storage with position id, division id, supervisor id, queue ids, and users
-      divisionId: existing.divisionId || 0,
-      supervisorId: existing.supervisorId || 0,
+      divisionId: divisionId,
+      supervisorId: supervisorId,
       queueIds: queueIds,
-      users: existing.users || [],
+      users: users,
     };
 
     localStorage.setItem(`position_assignment_${this.positionId}`, JSON.stringify(assignment));
+
     this.showMessage = true;
     setTimeout(() => {
       this.showMessage = false;

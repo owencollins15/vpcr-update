@@ -2,16 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  Division,
-  DIVISIONS,
-  Supervisor,
-  SUPERVISORS,
-  Queues,
-  QUEUES,
-  PositionAssignment,
-  userEntry,
-} from '../app';
+import { userEntry } from '../app';
 
 @Component({
   selector: 'app-position-users',
@@ -73,21 +64,23 @@ export class PositionUsers implements OnInit {
     this.users = this.users.filter((u) => u.id !== id);
     console.log('user removed');
   }
+
   save(): void {
-    const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
+    const saved = localStorage.getItem(`position_assignment_${this.positionId}`); //access data from position ID that is stored in the local storage
 
     let divisionId = 0;
     let supervisorId = 0;
     let queueIds: number[] = [];
 
     if (saved) {
-      const existing = JSON.parse(saved);
+      const existing = JSON.parse(saved); // existing constant set equal to saved data
       divisionId = existing.divisionId || 0;
       supervisorId = existing.supervisorId || 0;
       queueIds = existing.queueIds || [];
     }
 
     const assignment = {
+      //store ids under 'assignment'
       divisionId: divisionId,
       supervisorId: supervisorId,
       queueIds: queueIds,
@@ -96,12 +89,12 @@ export class PositionUsers implements OnInit {
 
     console.log('Saving this object:', assignment);
 
-    localStorage.setItem(`position_assignment_${this.positionId}`, JSON.stringify(assignment));
+    localStorage.setItem(`position_assignment_${this.positionId}`, JSON.stringify(assignment)); // saves constant to local storage and prints data on position users page
 
     this.showMessage = true;
     setTimeout(() => {
       this.showMessage = false;
-      this.goBack();
+      this.goBack(); //return to position overview after 1.5 s
     }, 1500);
   }
 
