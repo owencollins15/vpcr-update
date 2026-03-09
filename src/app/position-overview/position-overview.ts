@@ -1,7 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DIVISIONS, SUPERVISORS, QUEUES, PositionAssignment, userEntry } from '../app';
+import {
+  DIVISIONS,
+  SUPERVISORS,
+  QUEUES,
+  PositionAssignment,
+  userEntry,
+  Position,
+  POSITION,
+} from '../app';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -32,7 +40,7 @@ export class PositionOverview implements OnInit {
       const id = params.get('id');
       if (id) {
         this.positionId = Number(id);
-        this.positionName = `position${id}`;
+        this.positionName = POSITION.find((p) => p.id === Number(id))?.name || ''; // displays selected position name in header of position overview page , goes thru positions array matching id and returning name property , if no match found return empty string '
         this.loadPositionData(); // Reload data every time
       }
     });

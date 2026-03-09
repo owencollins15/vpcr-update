@@ -1,17 +1,20 @@
-@if (showPositionList) {
-  <h2>Employee Positions</h2>
-  <p>Select any position below to assign position data</p>
+<div>
+  @if (showPositionList) {
+    <h2>Employee Positions</h2>
+    <p>Select any position below to assign position data</p>
 
-  <ul class="position-list">
-    @for (pos of positions; track pos.id) {
-      <li class="position-row" (click)="goToPosition(pos)">
-        <span class="name">{{ pos.name }}</span>
+    <ul class="position-list">
+      @for (pos of positions; track pos.id) {
+        <li class="position-row" (click)="goToPosition(pos)">
+          <span class="name">{{ pos.name }}</span>
 
-        @if (lastSavedPositionId === pos.id) {
-          <span class="saved">✔Position data saved</span>
-        }
-      </li>
-    }
-  </ul>
-}
-<router-outlet></router-outlet>
+          @if (lastSavedPositionId === pos.id) {
+            <span class="saved">✔Position data saved</span>
+          }
+        </li>
+      }
+    </ul>
+  }
+</div>
+
+<router-outlet> </router-outlet>

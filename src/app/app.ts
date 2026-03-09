@@ -12,6 +12,18 @@ export interface Position {
   divisionId: number;
   supervisorId: number;
 }
+export const POSITION: Position[] = [
+  { id: 1, name: 'position 1', divisionId: 0, supervisorId: 0 },
+  { id: 2, name: 'position 2', divisionId: 0, supervisorId: 0 },
+  { id: 3, name: 'position 3', divisionId: 0, supervisorId: 0 },
+  { id: 4, name: 'position 4', divisionId: 0, supervisorId: 0 },
+  { id: 5, name: 'position 5', divisionId: 0, supervisorId: 0 },
+  { id: 6, name: 'position 6', divisionId: 0, supervisorId: 0 },
+  { id: 7, name: 'position 7', divisionId: 0, supervisorId: 0 },
+  { id: 8, name: 'position 8', divisionId: 0, supervisorId: 0 },
+  { id: 9, name: 'position 9', divisionId: 0, supervisorId: 0 },
+  { id: 10, name: 'position 10', divisionId: 0, supervisorId: 0 },
+];
 export interface Division {
   id: number;
   name: string;
@@ -69,19 +81,7 @@ export interface PositionAssignment {
   styleUrl: './app.scss',
 })
 export class App {
-  positions: Position[] = [
-    //positions array with json constants
-    { id: 1, name: 'position 1', divisionId: 0, supervisorId: 0 },
-    { id: 2, name: 'position 2', divisionId: 0, supervisorId: 0 },
-    { id: 3, name: 'position 3', divisionId: 0, supervisorId: 0 },
-    { id: 4, name: 'position 4', divisionId: 0, supervisorId: 0 },
-    { id: 5, name: 'position 5', divisionId: 0, supervisorId: 0 },
-    { id: 6, name: 'position 6', divisionId: 0, supervisorId: 0 },
-    { id: 7, name: 'position 7', divisionId: 0, supervisorId: 0 },
-    { id: 8, name: 'position 8', divisionId: 0, supervisorId: 0 },
-    { id: 9, name: 'position 9', divisionId: 0, supervisorId: 0 },
-    { id: 10, name: 'position 10', divisionId: 0, supervisorId: 0 },
-  ];
+  positions: Position[] = POSITION;
   lastSavedPositionId: number | null = null; //can be either type number or type null , initialized as null
   showPositionList = true;
 

@@ -31,7 +31,7 @@ export class PositionUsers implements OnInit {
     const id = this.route.snapshot.paramMap.get('id'); //grabs id from url
     if (id) {
       this.positionId = Number(id);
-      this.positionName = `position${id}`;
+      this.positionName = `position ${id}`;
       this.loadSavedAssignment(); // restores any previously saved users with saved data
     }
   }
@@ -40,7 +40,7 @@ export class PositionUsers implements OnInit {
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`); // checks local storage for any users and their division assignment saved to that position
     if (saved) {
       //if found loads users back into the array with their saved data
-      const data = JSON.parse(saved); //converts JSON string into a JavaScript Object ex. "users" is now users: [...]
+      const data = JSON.parse(saved); //converts JSON string into a JavaScript Object
       this.users = data.users || []; //restores users that were added, if data.users exist use it if no use empty array
     }
     console.log('assignment loaded');
