@@ -10,15 +10,18 @@
   <div class="form-group">
     <label class="form-label">Supervisor</label>
     <input
+      placeholder="Search for a supervisor..."
       type="text"
       class="input-field"
-      placeholder="Search for a supervisor..."
       [(ngModel)]="supervisorSearchQuery"
       (input)="filterSupervisors()"
       (focus)="showSupervisorDropdown = true"
     />
 
     @if (showSupervisorDropdown && filteredSupervisors.length > 0) {
+      <ul>
+        <span> Select supervisor: </span>
+      </ul>
       <div class="search-dropdown">
         @for (supervisor of filteredSupervisors; track supervisor.id) {
           <div class="dropdown-item" (click)="selectSupervisor(supervisor)">

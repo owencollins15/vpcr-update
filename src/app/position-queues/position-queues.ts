@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Queues, QUEUES, PositionAssignment, userEntry } from '../app';
+import { Queues, QUEUES, PositionAssignment, POSITION, Position, userEntry } from '../app';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-position-queues',
@@ -13,6 +14,8 @@ import { Queues, QUEUES, PositionAssignment, userEntry } from '../app';
 export class PositionQueues {
   positionId: number = 0;
   positionName: string = ' ';
+
+  divisionID: number = 0;
 
   availableQueues: Queues[] = [];
   selectedQueues: Queues[] = [];
@@ -28,13 +31,20 @@ export class PositionQueues {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.positionId = Number(id);
-      this.positionName = `position${id}`;
+      const pos = POSITION.find((p) => p.id === this.positionId);
+      this.positionName = pos?.name || ';';
+      const assignData = localStorage.getItem(`position_assignment_${this.positionId}`);
+      if (assignData) {
+        const data = JSON.parse(assignData);
+        this.divisionID = data.divisionId || 0;
+      }
+      console.log(this.divisionID);
       this.loadSavedQueue();
     }
   }
 
   loadSavedQueue() {
-    this.availableQueues = [...QUEUES];
+    this.availableQueues = QUEUES.filter((q) => q.divisionId === this.divisionID);
     this.selectedQueues = [];
 
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
@@ -46,7 +56,6 @@ export class PositionQueues {
           const queue = QUEUES.find((q) => q.id === queueId);
           if (queue) {
             this.selectedQueues.push(queue);
-            this.availableQueues = this.availableQueues.filter((q) => q.id !== queueId);
           }
         }
       }
@@ -60,17 +69,19 @@ export class PositionQueues {
   }
 
   removeQueue(queue: Queues) {
-    this.selectedQueues = this.selectedQueues.filter((q) => q.id !== queue.id); // removes selected items through 'filter' function
+    this.selectedQueues = this.selectedQueues.filter((q) => q.id !== queue.id); // removes selected items using 'filter' function
   }
 
   addAllQueues() {
-    this.selectedQueues = [...QUEUES];
+    //adds all queues to selected section
+    this.selectedQueues = [...QUEUES.filter((q) => q.divisionId === this.divisionID)];
     console.log('all queues added');
   }
 
   removeAllQueues() {
+    //clear selected items and return back to available
     this.selectedQueues = [];
-    this.availableQueues = [...QUEUES];
+    this.availableQueues = [...QUEUES.filter((q) => q.divisionId === this.divisionID)];
   }
 
   goBack() {
@@ -80,12 +91,13 @@ export class PositionQueues {
 
   save(): void {
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
-
+    // default state:
     let divisionId = 0;
     let supervisorId = 0;
     let users: any[] = [];
 
     if (saved) {
+      //if saved data exists , parse it into an object and override default state
       const existing = JSON.parse(saved);
       divisionId = existing.divisionId || 0;
       supervisorId = existing.supervisorId || 0;
@@ -94,10 +106,12 @@ export class PositionQueues {
 
     const queueIds: number[] = [];
     for (let i = 0; i < this.selectedQueues.length; i++) {
+      //map to select queue objects to array of queue ids
       queueIds.push(this.selectedQueues[i].id);
     }
 
     const assignment = {
+      //assignment object created to store all data
       divisionId: divisionId,
       supervisorId: supervisorId,
       queueIds: queueIds,

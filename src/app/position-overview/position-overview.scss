@@ -123,18 +123,22 @@ h2 {
 }
 
 .chips-display {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
   .chip {
-    display: inline-block;
-    background: #e3f2fd;
-    border: 1px solid #90caf9;
-    border-radius: 16px;
-    padding: 0.3rem 0.75rem;
-    font-size: 0.85rem;
-    color: #1976d2;
-    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #444;
+    font-size: 0.95rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: #f8f9fa;
+    }
   }
 }

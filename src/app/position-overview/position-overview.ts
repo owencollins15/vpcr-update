@@ -1,15 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  DIVISIONS,
-  SUPERVISORS,
-  QUEUES,
-  PositionAssignment,
-  userEntry,
-  Position,
-  POSITION,
-} from '../app';
+import { DIVISIONS, SUPERVISORS, QUEUES, PositionAssignment, POSITION } from '../app';
 import { Subscription } from 'rxjs';
 
 @Component({
