@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Communication } from './communication';
 import { Subscription } from 'rxjs';
@@ -233,8 +233,9 @@ export class App {
   constructor(
     private router: Router,
     private communication: Communication,
+    private cdr: ChangeDetectorRef,
   ) {
-    this.router.events
+    this.routerSubscription = this.router.events
       .pipe(
         filter(
           (event) =>
@@ -243,21 +244,23 @@ export class App {
         ),
       )
       .subscribe(() => {
-        this.showPositionList = !this.router.url.includes('/position/'); // hides positions list once a position is selected, shows again once returned
+        // hides positions list once a position is selected, shows again once returned
         const state = history.state as {
           //history.state is a native browser api that stores data passed during a navigation
           saved?: boolean; //saved is true when the button gets pressed
           positionId?: number; //saves responsibilities to exact position id
         };
-
-        if (state?.saved && state.positionId) {
-          //only show a message if save button is pressed
-          this.lastSavedPositionId = state.positionId; //re-renders template and displays message after save
+        this.showPositionList = !this.router.url.includes('/position/');
+        if (state?.saved && state.positionId !== undefined) {
+          this.lastSavedPositionId = state.positionId;
         }
+        this.cdr.detectChanges();
       });
   }
 
   ngOnInit() {
+    this.showPositionList = !this.router.url.includes('/position/');
+
     this.subscription = this.communication.currentMessage.subscribe((message) => {
       console.log('Message Received;', message);
     });

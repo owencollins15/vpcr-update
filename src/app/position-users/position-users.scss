@@ -19,26 +19,6 @@
   }
 }
 
-.btn-back {
-  background: none;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  padding: 0.4rem 0.9rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #444;
-
-  &:hover {
-    background: #f0f0f0;
-  }
-}
-
-.subtitle {
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 1.25rem;
-}
-
 // ── Save message ──────────────────────────────────────────
 .save-message {
   background: #d4edda;
@@ -139,16 +119,17 @@
 }
 
 .btn-secondary {
-  background: #6c757d;
-  color: white;
-  border: none;
+  background: #e0e0e0;
+  border: 1px solid #bbb;
   border-radius: 4px;
-  padding: 0.5rem 1.1rem;
+  padding: 0.4rem 1rem;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  display: inline-block;
 
   &:hover {
-    background: #5c636a;
+    background: #cfcfcf;
   }
 }
 

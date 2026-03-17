@@ -105,6 +105,6 @@ export class PositionOverview implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/positions']);
+    this.router.navigate(['/position']);
   }
 }

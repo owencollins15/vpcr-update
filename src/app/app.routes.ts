@@ -8,12 +8,12 @@ import { PositionQueues } from './position-queues/position-queues';
 import { App } from './app';
 
 export const routes: Routes = [
-  { path: ' ', redirectTo: 'positions', pathMatch: 'full' },
+  { path: ' ', redirectTo: 'position', pathMatch: 'full' },
   { path: 'position/:id', component: PositionOverview },
   { path: 'position/:id/responsibilities', component: PositionDetail },
   { path: 'position/:id/division', component: PositionDivision },
   { path: 'position/:id/supervisor', component: PositionSupervisor },
   { path: 'position/:id/queues', component: PositionQueues },
   { path: 'position/:id/users', component: PositionUsers },
-  { path: '**', redirectTo: 'positions' },
+  { path: '**', redirectTo: 'position' },
 ];

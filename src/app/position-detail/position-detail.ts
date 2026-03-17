@@ -66,6 +66,12 @@ export class PositionDetail implements OnInit {
       const data = JSON.parse(saved); //converts saved string into data object
       if (data.selected) {
         this.selected = data.selected; //loads saved data into selected array to display in position detail
+        this.selected.forEach((cat) => {
+          const sourceCat = this.source.find((c) => c.key === cat.key);
+          if (sourceCat) {
+            sourceCat.items = sourceCat.items.filter((i) => !cat.items.includes(i));
+          }
+        });
       }
     }
   }
@@ -81,16 +87,20 @@ export class PositionDetail implements OnInit {
   }
 
   addItem(categoryKey: CategoryKey, item: string) {
-    //adds specific item
+    //adds specific item and transfers to selected and no longer available
     const cat = this.ensureSelectedCategory(categoryKey);
     if (!cat.items.includes(item)) {
       cat.items.push(item);
+      const sourceCat = this.source.find((c) => c.key === categoryKey);
+      if (sourceCat) {
+        sourceCat.items = sourceCat.items.filter((i) => i !== item);
+      }
     }
     console.log('Item Added!');
   }
 
   addAll(categoryKey: CategoryKey) {
-    //adds all items
+    //adds all items and removes from available
     const sourceCat = this.source.find((c) => c.key === categoryKey);
     if (!sourceCat) return;
     const selectedCat = this.ensureSelectedCategory(categoryKey);
@@ -99,19 +109,18 @@ export class PositionDetail implements OnInit {
         selectedCat.items.push(item);
       }
     });
+    sourceCat.items = [];
     console.log('All Items Added!');
   }
 
   removeAll(categoryKey: CategoryKey) {
-    //removes all
+    //removes all items and returns from selected to available
     const sourceCat = this.source.find((c) => c.key === categoryKey);
-    if (!sourceCat) return;
     const selectedCat = this.ensureSelectedCategory(categoryKey);
-    sourceCat.items.forEach((item) => {
-      if (selectedCat.items.includes(item)) {
-        selectedCat.items = selectedCat.items.filter((i) => i !== item);
-      }
-    });
+    if (!sourceCat || !selectedCat) return;
+    sourceCat.items.push(...selectedCat.items);
+    sourceCat.items.sort();
+    selectedCat.items = [];
     console.log('All Items Removed!');
   }
 
@@ -122,6 +131,11 @@ export class PositionDetail implements OnInit {
     cat.items = cat.items.filter((i) => i !== item);
     if (cat.items.length === 0) {
       this.selected = this.selected.filter((c) => c.key !== categoryKey);
+    }
+    const sourceCat = this.source.find((c) => c.key === categoryKey);
+    if (sourceCat) {
+      sourceCat.items.push(item); //pushes selected item back to available after removed
+      sourceCat.items.sort(); //sorts pushed item into correct spot in array
     }
     console.log('Removed Item!');
   }

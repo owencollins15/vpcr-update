@@ -28,15 +28,15 @@ export class PositionQueues {
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id'); //retrieves id from url route so if /position/5 id = 5
     if (id) {
-      this.positionId = Number(id);
-      const pos = POSITION.find((p) => p.id === this.positionId);
-      this.positionName = pos?.name || ';';
+      this.positionId = Number(id); //if id exists convert string id into a number id
+      const pos = POSITION.find((p) => p.id === this.positionId); //search POSITION array for id matching this.position id
+      this.positionName = pos?.name || ';'; //this.positionName gets set to the name that matches the found id
       const assignData = localStorage.getItem(`position_assignment_${this.positionId}`);
       if (assignData) {
-        const data = JSON.parse(assignData);
-        this.divisionID = data.divisionId || 0;
+        const data = JSON.parse(assignData); //if found in local storage parse json data
+        this.divisionID = data.divisionId || 0; // set new id to id found in stored data or default to 0
       }
       console.log(this.divisionID);
       this.loadSavedQueue();
@@ -44,8 +44,8 @@ export class PositionQueues {
   }
 
   loadSavedQueue() {
-    this.availableQueues = QUEUES.filter((q) => q.divisionId === this.divisionID);
-    this.selectedQueues = [];
+    this.availableQueues = QUEUES.filter((q) => q.divisionId === this.divisionID); //filter QUEUES to only include queues within current division
+    this.selectedQueues = []; //initializes selected queues as empty
 
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
     if (saved) {
@@ -53,7 +53,7 @@ export class PositionQueues {
       if (data.queueIds && data.queueIds.length > 0) {
         for (let i = 0; i < data.queueIds.length; i++) {
           const queueId = data.queueIds[i];
-          const queue = QUEUES.find((q) => q.id === queueId);
+          const queue = QUEUES.find((q) => q.id === queueId); //if data.queueIds exists loop through saved queue ids and find the corresponding queue object and push into selected queues array
           if (queue) {
             this.selectedQueues.push(queue);
           }
@@ -63,6 +63,7 @@ export class PositionQueues {
   }
 
   addQueue(queue: Queues) {
+    this.availableQueues = this.availableQueues.filter((q) => q.id !== queue.id);
     if (!this.selectedQueues.find((q) => q.id === queue.id)) {
       this.selectedQueues = [...this.selectedQueues, queue];
     }
@@ -74,6 +75,7 @@ export class PositionQueues {
 
   addAllQueues() {
     //adds all queues to selected section
+    this.availableQueues = [];
     this.selectedQueues = [...QUEUES.filter((q) => q.divisionId === this.divisionID)];
     console.log('all queues added');
   }
