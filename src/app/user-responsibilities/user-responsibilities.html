@@ -1,0 +1,56 @@
+<div class="page-container">
+  <!-- Header -->
+  <button class="btn-back" (click)="cancel()">← Back to User</button>
+  <h2>{{ positionName }}</h2>
+  <h4>Position – Responsibilities</h4>
+
+  <!-- Save message -->
+  @if (showMessage) {
+    <div class="save-message">✅ Responsibilities saved!</div>
+  }
+
+  <!-- Dual list container -->
+  <div class="dual-list-container">
+    <!-- LEFT: Available -->
+    <div class="list-panel">
+      <p class="panel-label">Available</p>
+      <button class="btn-add-all" (click)="addAll('selectedResponsibilities')">Add All</button>
+
+      @for (cat of source; track cat.key) {
+        @for (item of cat.items; track item) {
+          <div class="list-row">
+            <span>{{ item }}</span>
+            <button class="btn-arrow" (click)="addItem(cat.key, item)">→</button>
+          </div>
+        }
+      }
+    </div>
+
+    <!-- RIGHT: Selected -->
+    <div class="list-panel">
+      <p class="panel-label">Selected</p>
+      <button class="btn-remove-all" (click)="removeAll('selectedResponsibilities')">
+        Remove All
+      </button>
+
+      @if (selected.length === 0) {
+        <div class="empty-state">No responsibilities assigned</div>
+      }
+
+      @for (cat of selected; track cat.key) {
+        @for (item of cat.items; track item) {
+          <div class="list-row">
+            <span>{{ item }}</span>
+            <button class="btn-remove" (click)="removeItem(cat.key, item)">✕</button>
+          </div>
+        }
+      }
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-actions">
+    <button class="btn-secondary" (click)="cancel()">Cancel</button>
+    <button class="btn-primary" (click)="saveResponsibilities()">💾 Save</button>
+  </div>
+</div>

@@ -42,6 +42,7 @@ export class PositionDivision implements OnInit {
   }
 
   onDivisionChange(event: any) {
+    //take value from event target , convert it into a number and store in selDivisionId
     this.selDivisionId = Number(event.target.value);
     console.log('Division changed to:', this.selDivisionId);
   }
@@ -49,22 +50,22 @@ export class PositionDivision implements OnInit {
   saveDiv() {
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`);
     const existing: PositionAssignment = saved
-      ? JSON.parse(saved)
+      ? JSON.parse(saved) // parse existing data or initialize a default structure if none exists
       : {
           divisionId: 0,
           supervisorId: 0,
           queueIds: [],
           users: [],
         };
-
+    //update divisionId with selected divisionId
     const assignment: PositionAssignment = {
-      divisionId: this.selDivisionId,
+      divisionId: this.selDivisionId, // updated divId
       supervisorId: existing.supervisorId || 0,
       queueIds: existing.queueIds || [],
       users: existing.users || [],
     };
 
-    localStorage.setItem(`position_assignment_${this.positionId}`, JSON.stringify(assignment));
+    localStorage.setItem(`position_assignment_${this.positionId}`, JSON.stringify(assignment)); //use setItem to parse a value into an object
 
     this.showMessage = true;
     setTimeout(() => {

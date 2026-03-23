@@ -5,12 +5,12 @@ import { Communication } from '../communication';
 
 type CategoryKey = 'selectedResponsibilities';
 
-interface SourceCategory {
+export interface SourceCategory {
   key: CategoryKey;
   label: string;
   items: string[];
 }
-interface SelectedCategory {
+export interface SelectedCategory {
   key: CategoryKey;
   items: string[];
 }

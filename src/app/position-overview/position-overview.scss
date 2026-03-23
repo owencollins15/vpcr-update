@@ -107,10 +107,14 @@ h2 {
   margin: 0;
 
   li {
-    padding: 0.5rem 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.75rem;
     border-bottom: 1px solid #f0f0f0;
     color: #444;
     font-size: 0.95rem;
+    min-height: 35px;
 
     &:last-child {
       border-bottom: none;
@@ -118,6 +122,16 @@ h2 {
 
     &:hover {
       background: #f8f9fa;
+    }
+
+    .btn-edit {
+      align-self: center;
+      height: fit-content;
+      padding: 0.1rem 0.6rem;
+      background-color: #00000086;
+      &:hover {
+        background: rgba(128, 128, 128, 0.89);
+      }
     }
   }
 }

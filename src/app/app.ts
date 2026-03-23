@@ -207,6 +207,10 @@ export const QUEUES: Queues[] = [
 export interface userEntry {
   id: number;
   name: string;
+  divisionId?: number;
+  supervisorId?: number;
+  queueIds?: number[];
+  selected?: any[];
 }
 
 export interface PositionAssignment {
@@ -250,7 +254,7 @@ export class App {
           saved?: boolean; //saved is true when the button gets pressed
           positionId?: number; //saves responsibilities to exact position id
         };
-        this.showPositionList = !this.router.url.includes('/position/');
+        this.showPositionList = !this.router.url.includes('/position');
         if (state?.saved && state.positionId !== undefined) {
           this.lastSavedPositionId = state.positionId;
         }
@@ -259,7 +263,7 @@ export class App {
   }
 
   ngOnInit() {
-    this.showPositionList = !this.router.url.includes('/position/');
+    this.showPositionList = !this.router.url.includes('/position');
 
     this.subscription = this.communication.currentMessage.subscribe((message) => {
       console.log('Message Received;', message);

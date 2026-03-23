@@ -33,6 +33,7 @@ export class PositionSupervisor implements OnInit {
       this.positionId = Number(id);
       this.positionName = `position${id}`;
       this.loadSavedSupervisor();
+      console.log('supervisorId:', this.selSupervisorId);
     }
   }
 
@@ -44,7 +45,7 @@ export class PositionSupervisor implements OnInit {
 
       if (this.selSupervisorId === 0) {
         const supervisor = this.supervisor.find((s) => s.id === this.selSupervisorId);
-        this.supervisorSearchQuery = supervisor ? supervisor.name : ' ';
+        this.supervisorSearchQuery = supervisor ? supervisor.name : '';
       }
     }
   }

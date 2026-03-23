@@ -1,30 +1,7 @@
 <div class="overview-container">
-  <!-- Header -->
-  <button class="btn-back" (click)="goBack()">← Back to Positions</button>
-  <h2>{{ positionName }}</h2>
-  <p class="subtitle">Overview</p>
-
-  <!-- Users Section -->
-  <div class="info-card">
-    <div class="card-header">
-      <h3>Assigned Users</h3>
-      <button class="btn-edit" (click)="addUsers()">✏️ Edit</button>
-    </div>
-    <div class="card-body">
-      @if (users.length === 0) {
-        <p class="empty-text">No users assigned</p>
-      } @else {
-        <ul class="item-list">
-          @for (user of users; track user) {
-            <li>
-              {{ user.name }}
-              <button class="btn-edit" (click)="editUsers(user)">Edit User</button>
-            </li>
-          }
-        </ul>
-      }
-    </div>
-  </div>
+  <button class="btn-back" (click)="goBack()">← Back to Position</button>
+  <h2>{{ userName }}</h2>
+  <p class="subtitle">User Overview</p>
 
   <!-- Responsibilities Section -->
   <div class="info-card">
@@ -34,7 +11,7 @@
     </div>
     <div class="card-body">
       @if (responsibilities.length === 0) {
-        <p class="empty-text">Edit to assign responsibilities</p>
+        <p class="empty-text">Edit to assign responsibilities.</p>
       } @else {
         <ul class="item-list">
           @for (item of responsibilities; track item) {
@@ -52,12 +29,10 @@
       <button class="btn-edit" (click)="editDivision()">✏️ Edit</button>
     </div>
     <div class="card-body">
-      @if (division === '') {
-        <p class="empty-text">No division assigned</p>
+      @if (division === ' ') {
+        <p class="empty-text">No division assigned.</p>
       } @else {
-        <div class="chips-display">
-          <span class="chip">{{ division }}</span>
-        </div>
+        <span class="chip">{{ division }}</span>
       }
     </div>
   </div>
@@ -69,12 +44,10 @@
       <button class="btn-edit" (click)="editSupervisor()">✏️ Edit</button>
     </div>
     <div class="card-body">
-      @if (supervisor === '') {
-        <p class="empty-text">No supervisor assigned</p>
+      @if (supervisor === ' ') {
+        <p class="empty-text">No supervisor assigned.</p>
       } @else {
-        <div class="chips-display">
-          <span class="chip">{{ supervisor }}</span>
-        </div>
+        <span class="chip">{{ supervisor }}</span>
       }
     </div>
   </div>
@@ -87,11 +60,11 @@
     </div>
     <div class="card-body">
       @if (queues.length === 0) {
-        <p class="empty-text">No queues assigned</p>
+        <p class="empty-text">No queues assigned.</p>
       } @else {
         <div class="chips-display">
           @for (queue of queues; track queue) {
-            <li class="chip">{{ queue }}</li>
+            <span class="chip">{{ queue }}</span>
           }
         </div>
       }

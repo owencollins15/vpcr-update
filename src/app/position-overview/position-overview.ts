@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DIVISIONS, SUPERVISORS, QUEUES, PositionAssignment, POSITION } from '../app';
+import { DIVISIONS, SUPERVISORS, QUEUES, PositionAssignment, POSITION, userEntry } from '../app';
 import { Subscription } from 'rxjs';
+import { UserOverview } from '../user-overview/user-overview';
 
 @Component({
   selector: 'app-position-overview',
@@ -15,10 +16,10 @@ export class PositionOverview implements OnInit {
   positionName: string = ' ';
 
   responsibilities: string[] = [];
-  division: string = '';
-  supervisor: string = '';
+  division: string = ' ';
+  supervisor: string = ' ';
   queues: string[] = [];
-  users: string[] = [];
+  users: userEntry[] = [];
 
   private routeSub?: Subscription;
   constructor(
@@ -27,7 +28,7 @@ export class PositionOverview implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to route params - this will trigger whenever we navigate to this route
+    // Subscribe to route params - this will trigger whenever navigated to this route
     this.routeSub = this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -78,7 +79,7 @@ export class PositionOverview implements OnInit {
       if (data.users) {
         for (let i = 0; i < data.users.length; i++) {
           //loops through user ids
-          this.users.push(data.users[i].name); //push user name and display in position overview
+          this.users.push(data.users[i]); //push user name and display in position overview
         }
       }
     }
@@ -100,11 +101,15 @@ export class PositionOverview implements OnInit {
     this.router.navigate(['/position', this.positionId, 'queues']); //edit button for queues, routes to queues page
   }
 
-  editUsers() {
+  addUsers() {
     this.router.navigate(['/position', this.positionId, 'users']); //edit button for users, routes to users page
   }
 
   goBack() {
     this.router.navigate(['/position']);
+  }
+
+  editUsers(user: userEntry) {
+    this.router.navigate(['/position', this.positionId, 'user', user.id]);
   }
 }
