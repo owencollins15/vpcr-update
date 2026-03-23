@@ -52,7 +52,7 @@ export class UserDivision implements OnInit {
 
   saveDiv() {
     const saved = localStorage.getItem(`position_assignment_${this.positionId}`); //use geItem to parse string into object
-    const existing: PositionAssignment = saved
+    const existing = saved
       ? JSON.parse(saved)
       : { divisionId: 0, supervisorId: 0, queueIds: [], users: [] };
     const user = existing.users?.find((u: any) => u.id === this.userId);

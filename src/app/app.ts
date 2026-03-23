@@ -30,7 +30,7 @@ export interface Division {
 }
 
 export const DIVISIONS: Division[] = [
-  { id: 1, name: 'SOAs' },
+  { id: 1, name: 'SOA' },
   { id: 2, name: 'SDMC' },
   { id: 3, name: 'Intake' },
   { id: 4, name: '3BDR' },
@@ -254,11 +254,12 @@ export class App {
           saved?: boolean; //saved is true when the button gets pressed
           positionId?: number; //saves responsibilities to exact position id
         };
-        this.showPositionList = !this.router.url.includes('/position');
+        this.showPositionList = !this.router.url.includes('/position'); //toggle list visibility based on url, hides list if '/position' is in url
         if (state?.saved && state.positionId !== undefined) {
+          //when navigating back restore saved positionId
           this.lastSavedPositionId = state.positionId;
         }
-        this.cdr.detectChanges();
+        this.cdr.detectChanges(); //manually trigger change detection to update view
       });
   }
 

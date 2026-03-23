@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DIVISIONS, SUPERVISORS, QUEUES, PositionAssignment, POSITION, userEntry } from '../app';
 import { Subscription } from 'rxjs';
-import { UserOverview } from '../user-overview/user-overview';
 
 @Component({
   selector: 'app-position-overview',
