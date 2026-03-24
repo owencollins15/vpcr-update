@@ -15,8 +15,8 @@ export class PositionOverview implements OnInit {
   positionName: string = ' ';
 
   responsibilities: string[] = [];
-  division: string = ' ';
-  supervisor: string = ' ';
+  division: string = '';
+  supervisor: string = '';
   queues: string[] = [];
   users: userEntry[] = [];
 

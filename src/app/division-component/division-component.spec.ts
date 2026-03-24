@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PositionDivision } from './position-division';
+import { DivisionComponent } from './division-component';
 
-describe('PositionDivision', () => {
-  let component: PositionDivision;
-  let fixture: ComponentFixture<PositionDivision>;
+describe('DivisionComponent', () => {
+  let component: DivisionComponent;
+  let fixture: ComponentFixture<DivisionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PositionDivision]
+      imports: [DivisionComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PositionDivision);
+    fixture = TestBed.createComponent(DivisionComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
