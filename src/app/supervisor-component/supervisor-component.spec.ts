@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PositionSupervisor } from './position-supervisor';
+import { SupervisorComponent } from './supervisor-component';
 
-describe('PositionSupervisor', () => {
-  let component: PositionSupervisor;
-  let fixture: ComponentFixture<PositionSupervisor>;
+describe('SupervisorComponent', () => {
+  let component: SupervisorComponent;
+  let fixture: ComponentFixture<SupervisorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PositionSupervisor]
+      imports: [SupervisorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PositionSupervisor);
+    fixture = TestBed.createComponent(SupervisorComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
