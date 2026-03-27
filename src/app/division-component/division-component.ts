@@ -50,7 +50,7 @@ export class DivisionComponent implements OnInit {
       if (this.isUserMode) {
         const user = data.users?.find((u: any) => u.id === this.userId);
         if (user) {
-          this.displayName = user.name;
+          this.displayName = user.name || '';
           this.selDivisionId = user.divisionId || 0;
         }
       } else {

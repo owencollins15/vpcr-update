@@ -1,7 +1,7 @@
 <div class="page-container">
   <!-- Header -->
   <button class="btn-back" (click)="goBack()">← Back</button>
-  <h2>{{ positionName }}</h2>
+  <h2>{{ displayName }}</h2>
   <h4>Select Division to Assign Queues</h4>
 
   <!-- Save message -->
@@ -49,6 +49,6 @@
   <!-- Footer -->
   <div class="footer-actions">
     <button class="btn-secondary" (click)="goBack()">Cancel</button>
-    <button class="btn-primary" (click)="save()">💾 Save</button>
+    <button class="btn-primary" (click)="saveQueues()">💾 Save</button>
   </div>
 </div>

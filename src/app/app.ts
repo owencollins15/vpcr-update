@@ -206,7 +206,7 @@ export const QUEUES: Queues[] = [
 
 export interface userEntry {
   id: number;
-  name: string;
+  name?: string;
   divisionId?: number;
   supervisorId?: number;
   queueIds?: number[];

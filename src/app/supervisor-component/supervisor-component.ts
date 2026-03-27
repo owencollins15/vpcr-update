@@ -13,7 +13,6 @@ export class SupervisorComponent implements OnInit {
   positionId: number = 0;
   positionName: string = ' ';
   userId: number = 0;
-  userName: string = '';
 
   supervisor: Supervisor[] = SUPERVISORS; //holds array of supervisor objects imported from app.ts , this is what populates the drop down list
   filteredSupervisors: Supervisor[] = []; //filtered results that appear in dropdown
@@ -55,7 +54,7 @@ export class SupervisorComponent implements OnInit {
       if (this.isUserMode) {
         const user = data.users?.find((u: any) => u.id === this.userId);
         if (user) {
-          this.displayName = user.name;
+          this.displayName = user.name || '';
           this.selSupervisorId = user.divisionId || 0;
         }
         if (this.selSupervisorId !== 0) {

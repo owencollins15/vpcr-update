@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserQueues } from './user-queues';
+import { QueuesComponent } from './queues-component';
 
-describe('UserQueues', () => {
-  let component: UserQueues;
-  let fixture: ComponentFixture<UserQueues>;
+describe('QueuesComponent', () => {
+  let component: QueuesComponent;
+  let fixture: ComponentFixture<QueuesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserQueues]
+      imports: [QueuesComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UserQueues);
+    fixture = TestBed.createComponent(QueuesComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
