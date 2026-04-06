@@ -2,7 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { userEntry } from '../app';
+import {
+  DIVISIONS,
+  SUPERVISORS,
+  QUEUES,
+  PositionAssignment,
+  POSITION,
+  userEntry,
+} from '../position-selection/position-selection';
 
 @Component({
   selector: 'app-position-users',

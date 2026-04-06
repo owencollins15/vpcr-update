@@ -1,0 +1,196 @@
+<div class="overview-container">
+  <h2>New User</h2>
+  <p class="subtitle">User Creation</p>
+  <button class="reset" (click)="resetForm()">Reset Page</button>
+
+  <div class="info-card">
+    <!-- Row 1: Name | Contact | Employment -->
+    <div class="form-grid">
+      <!-- Name -->
+      <div class="field-group">
+        <h3>Name</h3>
+
+        <div class="field-row">
+          <label>Last Name</label>
+          <input type="text" [(ngModel)]="lastName" placeholder="Last Name" />
+        </div>
+
+        <div class="field-row">
+          <label>First Name</label>
+          <input type="text" [(ngModel)]="firstName" placeholder="First Name" />
+        </div>
+
+        <div class="field-row">
+          <label>MI</label>
+          <input type="text" [(ngModel)]="mi" maxlength="1" placeholder="MI" />
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="field-group">
+        <h3>Contact Information</h3>
+
+        <div class="field-row">
+          <label>Work Phone #</label>
+          <input type="text" [(ngModel)]="workPhone" placeholder="Work Phone" />
+        </div>
+
+        <div class="field-row">
+          <label>Mobile Phone #</label>
+          <input type="text" [(ngModel)]="mobilePhone" placeholder="Mobile Phone" />
+        </div>
+
+        <div class="field-row">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="email" placeholder="Email" />
+        </div>
+      </div>
+
+      <!-- Employment -->
+      <div class="field-group">
+        <h3>Employment</h3>
+
+        <div class="field-row">
+          <label>Employment Status</label>
+          <select [(ngModel)]="employmentStatus">
+            <option value="">-- Select --</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label>End Date</label>
+          <input type="date" [(ngModel)]="endDate" />
+        </div>
+
+        <div class="field-row checkbox-row">
+          <label>
+            <input type="checkbox" [(ngModel)]="inactivateHold" />
+            Inactivate Hold
+          </label>
+        </div>
+
+        <div class="field-row">
+          <label>Admin Notes</label>
+          <textarea [(ngModel)]="adminNotes" placeholder="Notes..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Row 2: Login | Position -->
+    <div class="form-grid">
+      <!-- Login -->
+      <div class="field-group">
+        <h3>Login</h3>
+
+        <div class="field-row">
+          <label>User ID</label>
+          <input type="text" [(ngModel)]="userId" placeholder="User ID" />
+        </div>
+
+        <div class="field-row">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="password" placeholder="Password" />
+        </div>
+
+        <div class="field-row">
+          <label>Confirm Password</label>
+          <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirm Password" />
+        </div>
+
+        <div class="field-row">
+          <label>User Role</label>
+          <select [(ngModel)]="userRole">
+            <option value="">-- Select --</option>
+            <option value="Admin">Admin</option>
+            <option value="Standard">Standard</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Position -->
+      <div class="field-group">
+        <h3>Position</h3>
+
+        <div class="field-row">
+          <label>Responsibility</label>
+          <select [(ngModel)]="responsibility">
+            <option value="">-- Select --</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label>New Responsibility</label>
+          <select [(ngModel)]="newResponsibility">
+            <option value="">-- Select --</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label>Position</label>
+          <select [(ngModel)]="position">
+            <option value="">-- Select --</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label>Division</label>
+          <select [(ngModel)]="division">
+            <option value="">-- Select --</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label>Position Organization</label>
+          <select [(ngModel)]="positionOrganization">
+            <option value="">-- Select --</option>
+          </select>
+        </div>
+
+        <div class="field-row checkbox-row">
+          <label>
+            <input type="checkbox" [(ngModel)]="warningEmailSentFlag" />
+            Warning Email Sent Flag
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="action-row">
+    <button class="btn-save" (click)="save()">Save User</button>
+  </div>
+
+  <!-- Created Users List  -->
+  @if (createdUsers.length > 0) {
+    <div class="info-card">
+      <div class="card-header">
+        <h3>Created Users</h3>
+        <p class="click-user">Click User Name to Show User Data:</p>
+      </div>
+
+      <div class="card-body">
+        <ul class="item-list">
+          @for (user of createdUsers; track user.id) {
+            <li>
+              <span
+                class="user-name"
+                (click)="selectUser(user)"
+                style="cursor: pointer; margin-right: 15px"
+                >{{ user.firstName }} {{ user.lastName }}</span
+              >
+              <button class="btn-edit" (click)="assignPosition(user)">Assign Position</button>
+              <button class="btn-back" (click)="removeUser(user.id)">Remove</button>
+            </li>
+          } @empty {
+            <p class="empty-text">No users created yet.</p>
+          }
+        </ul>
+      </div>
+    </div>
+  }
+</div>

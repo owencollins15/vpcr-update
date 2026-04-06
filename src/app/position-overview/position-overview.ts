@@ -1,7 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DIVISIONS, SUPERVISORS, QUEUES, PositionAssignment, POSITION, userEntry } from '../app';
+import {
+  DIVISIONS,
+  SUPERVISORS,
+  QUEUES,
+  PositionAssignment,
+  POSITION,
+  userEntry,
+} from '../position-selection/position-selection';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -64,7 +71,7 @@ export class PositionOverview implements OnInit {
       this.supervisor = sup ? sup.name : '';
 
       this.queues = []; //clear queue before data is loaded
-      if (data.queueIds) {
+      if (data.divisionId && data.queueIds) {
         for (let i = 0; i < data.queueIds.length; i++) {
           //loops through queue ids
           const queue = QUEUES.find((q) => q.id === data.queueIds[i]); //finds queue that matches the queue ID saved and stored in local storage

@@ -2,7 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Communication } from '../communication';
-import { DIVISIONS, Division, PositionAssignment } from '../app';
+import {
+  DIVISIONS,
+  SUPERVISORS,
+  QUEUES,
+  PositionAssignment,
+  POSITION,
+  userEntry,
+} from '../position-selection/position-selection';
 import { FormsModule } from '@angular/forms';
 
 type CategoryKey = 'selectedResponsibilities';

@@ -10,9 +10,13 @@ import { UserResponsibilities } from './user-responsibilities/user-responsibilit
 import { DivisionComponent } from './division-component/division-component';
 import { SupervisorComponent } from './supervisor-component/supervisor-component';
 import { QueuesComponent } from './queues-component/queues-component';
+import { PositionSelection } from './position-selection/position-selection';
+import { UserCreation } from './user-creation/user-creation';
 
 export const routes: Routes = [
-  { path: ' ', redirectTo: 'position', pathMatch: 'full' },
+  { path: '', component: UserCreation },
+  { path: 'CreateUser', component: UserCreation },
+  { path: 'position', component: PositionSelection },
   { path: 'position/:id', component: PositionOverview },
   { path: 'position/:id/responsibilities', component: PositionDetail },
   { path: 'position/:id/division', component: DivisionComponent },
@@ -24,5 +28,5 @@ export const routes: Routes = [
   { path: 'position/:positionId/user/:userId/queues', component: QueuesComponent },
   { path: 'position/:positionId/user/:userId/supervisor', component: SupervisorComponent },
   { path: 'position/:positionId/user/:userId/responsibilities', component: UserResponsibilities },
-  { path: '**', redirectTo: 'position' },
+  { path: '**', redirectTo: '' },
 ];

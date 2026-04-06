@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { DIVISIONS, SUPERVISORS, QUEUES, userEntry } from '../app';
+import {
+  DIVISIONS,
+  SUPERVISORS,
+  QUEUES,
+  PositionAssignment,
+  POSITION,
+  userEntry,
+} from '../position-selection/position-selection';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-user-overview',
@@ -63,7 +70,7 @@ export class UserOverview implements OnInit {
         // if userIds match, find supervisor name and match with user supervisorId
         const sup = SUPERVISORS.find((s) => s.id === user.supervisorId);
         this.supervisor = sup ? sup.name : ' ';
-        const queueIds = user.queueIds || []; //get list of og queue ids or empty array if none exist
+        const queueIds = user.divisionId ? user.queueIds || [] : []; //get list of og queue ids or empty array if none exist
         this.queues = queueIds
           .map((id: number) => {
             //map queue ids to queue name filtering out not found queues

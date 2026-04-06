@@ -2,7 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Queues, QUEUES, PositionAssignment, POSITION } from '../app';
+import {
+  DIVISIONS,
+  SUPERVISORS,
+  QUEUES,
+  PositionAssignment,
+  POSITION,
+  userEntry,
+  Queues,
+} from '../position-selection/position-selection';
 
 @Component({
   selector: 'app-queues-component',
@@ -57,6 +65,11 @@ export class QueuesComponent implements OnInit {
     this.loadSavedQueue();
   }
   loadSavedQueue() {
+    if (!this.divisionID) {
+      this.availableQueues = [];
+      this.selectedQueues = [];
+      return;
+    }
     this.availableQueues = QUEUES.filter((q) => q.divisionId === this.divisionID); //filter QUEUES to only include queues within current division
     this.selectedQueues = []; //initializes selected queues as empty
 

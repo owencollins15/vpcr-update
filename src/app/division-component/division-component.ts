@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { DIVISIONS, Division, PositionAssignment, POSITION } from '../app';
+import {
+  DIVISIONS,
+  SUPERVISORS,
+  QUEUES,
+  PositionAssignment,
+  POSITION,
+  userEntry,
+  Division,
+} from '../position-selection/position-selection';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';

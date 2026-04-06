@@ -1,0 +1,16 @@
+<div>
+  <h2>Employee Positions</h2>
+  <button (click)="backToUsers()">Back to User Page</button>
+  <p>Select any position below to assign position data</p>
+
+  <ul class="position-list">
+    @for (pos of positions; track pos.id) {
+      <li class="position-row" (click)="goToPosition(pos)">
+        <span class="name">{{ pos.name }}</span>
+        @if (lastSavedPositionId === pos.id) {
+          <span class="saved">Position data saved</span>
+        }
+      </li>
+    }
+  </ul>
+</div>
