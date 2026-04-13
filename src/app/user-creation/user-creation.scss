@@ -11,15 +11,14 @@
   font-weight: 600;
   color: #555;
   border-bottom: 1px solid #eee;
-  padding-bottom: 6px;
+  padding-bottom: 10px;
   gap: 5px;
 }
 
 .field-row {
   display: flex;
-  flex-direction: column; /* Label above input */
-  /* OR flex-direction: row; justify-content: space-between; for side-by-side */
-  gap: 5px; /* Space between label and input */
+  flex-direction: column;
+  gap: 10px;
 }
 
 .checkbox-row {
@@ -31,7 +30,7 @@
 textarea {
   width: 100%;
   resize: vertical;
-  min-height: 60px;
+  min-height: 100px;
 }
 
 span.user-name {

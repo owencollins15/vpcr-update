@@ -2,6 +2,7 @@
   <h2>New User</h2>
   <p class="subtitle">User Creation</p>
   <button class="reset" (click)="resetForm()">Reset Page</button>
+  <button class="btn-edit" (click)="positionEdit()">Positions View</button>
 
   <div class="info-card">
     <!-- Row 1: Name | Contact | Employment -->
@@ -95,6 +96,19 @@
           <label>Password</label>
           <input type="password" [(ngModel)]="password" placeholder="Password" />
         </div>
+        @if (password.length > 0) {
+          <div class="password-hints">
+            <small [ngStyle]="{ color: password.length >= 8 ? 'green' : 'red' }"
+              >✓ At least 8 characters</small
+            ><br />
+            <small [ngStyle]="{ color: hasUpper ? 'green' : 'red' }">✓ Uppercase letter</small
+            ><br />
+            <small [ngStyle]="{ color: hasLower ? 'green' : 'red' }">✓ Lowercase letter</small
+            ><br />
+            <small [ngStyle]="{ color: hasNumber ? 'green' : 'red' }">✓ Number</small><br />
+            <small [ngStyle]="{ color: hasSpecial ? 'green' : 'red' }">✓ Special character</small>
+          </div>
+        }
 
         <div class="field-row">
           <label>Confirm Password</label>
@@ -133,6 +147,9 @@
           <label>Position</label>
           <select [(ngModel)]="position">
             <option value="">-- Select --</option>
+            @for (pos of positions; track pos.id) {
+              <option [value]="pos.id">{{ pos.name }}</option>
+            }
           </select>
         </div>
 
@@ -183,8 +200,8 @@
                 style="cursor: pointer; margin-right: 15px"
                 >{{ user.firstName }} {{ user.lastName }}</span
               >
-              <button class="btn-edit" (click)="assignPosition(user)">Assign Position</button>
               <button class="btn-back" (click)="removeUser(user.id)">Remove</button>
+              <button class="btn-user" (click)="userRoleEdit(user)">edit user roles</button>
             </li>
           } @empty {
             <p class="empty-text">No users created yet.</p>

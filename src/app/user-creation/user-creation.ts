@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Communication } from '../communication';
+import { Position, POSITION } from '../position-selection/position-selection';
 
-interface CreatedUser {
+export interface CreatedUser {
   id: number;
   firstName: string;
   lastName: string;
@@ -27,6 +28,9 @@ interface CreatedUser {
   division: string;
   positionOrganization: string;
   warningEmailSentFlag: boolean;
+  divisionId?: number;
+  supervisorId?: number;
+  queueIds?: number[];
 }
 
 @Component({
@@ -61,6 +65,10 @@ export class UserCreation implements OnInit {
   selUserId: number | null = null;
 
   createdUsers: CreatedUser[] = [];
+
+  positionId: number = 0;
+
+  positions: Position[] = POSITION;
 
   private subscription!: Subscription;
 
@@ -119,6 +127,18 @@ export class UserCreation implements OnInit {
     }
     if (this.password !== this.confirmPassword) {
       alert('Passwords do not match.');
+      return;
+    }
+    if (
+      !this.hasUpper ||
+      !this.hasLower ||
+      !this.hasNumber ||
+      !this.hasSpecial ||
+      this.password.length < 8
+    ) {
+      alert(
+        'Password must be 8+ characters, include both a lower and upper case letter , include a number, and a special character',
+      );
       return;
     }
     if (this.selUserId !== null) {
@@ -204,14 +224,32 @@ export class UserCreation implements OnInit {
     this.warningEmailSentFlag = false;
   }
 
-  assignPosition(user: any) {
-    console.log('button clicked', user);
+  positionEdit() {
     this.router.navigate(['/position']);
   }
+
   removeUser(id: number) {
     this.createdUsers = this.createdUsers.filter((u) => u.id !== id);
 
     //  update local storage data so that on reload data stays consistent
     localStorage.setItem('created_users', JSON.stringify(this.createdUsers));
+  }
+
+  userRoleEdit(user: CreatedUser) {
+    console.log('user role clicked', user);
+    this.router.navigate(['/user', user.id]);
+  }
+
+  get hasUpper() {
+    return /[A-Z]/.test(this.password);
+  }
+  get hasLower() {
+    return /[a-z]/.test(this.password);
+  }
+  get hasNumber() {
+    return /[0-9]/.test(this.password);
+  }
+  get hasSpecial() {
+    return /[!@#$%^&*]/.test(this.password);
   }
 }

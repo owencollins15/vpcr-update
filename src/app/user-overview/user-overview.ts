@@ -10,6 +10,8 @@ import {
   userEntry,
 } from '../position-selection/position-selection';
 import { Subscription } from 'rxjs';
+import { CreatedUser } from '../user-creation/user-creation';
+
 @Component({
   selector: 'app-user-overview',
   imports: [CommonModule],
@@ -26,8 +28,10 @@ export class UserOverview implements OnInit {
   responsibilities: string[] = [];
   division: string = ' ';
   supervisor: string = ' ';
-  queues: number[] = [];
+  queues: string[] = [];
   users: string[] = [];
+
+  createdUsers: CreatedUser[] = [];
 
   private routeSub?: Subscription;
   constructor(
@@ -39,11 +43,13 @@ export class UserOverview implements OnInit {
     // Subscribe to route params - this will trigger whenever navigated to this route
     this.routeSub = this.route.paramMap.subscribe((params) => {
       const posId = params.get('positionId');
-      const usrId = params.get('userId');
+      const userId = params.get('userId');
 
-      if (posId && usrId) {
-        this.positionId = +posId; // numeric string -> number using '+'
-        this.userId = +usrId; // numeric string -> number using '+'
+      if (userId) {
+        this.userId = +userId;
+        if (posId) {
+          this.positionId = +posId;
+        }
         this.loadUserData();
         console.log('positionId:', this.positionId, 'userId:', this.userId);
       }
@@ -59,11 +65,12 @@ export class UserOverview implements OnInit {
 
   loadUserData() {
     //loads saved user data that was stored within local storage
-    const saved = localStorage.getItem(`position_assignment_${this.positionId}`); //getItem to parse string
+    const saved = localStorage.getItem(`created_users`); //getItem to parse string
     if (saved) {
-      const data = JSON.parse(saved); //string converted to object if data is found
-      const user = data.users?.find((u: userEntry) => u.id === this.userId); //find user entry within loaded data with matching userId
+      const createdUsers: CreatedUser[] = JSON.parse(saved);
+      const user = createdUsers.find((u: userEntry) => u.id === this.userId); //find user entry within loaded data with matching userId
       if (user) {
+        this.userName = `${user.firstName} ${user.lastName}`;
         //if userIds match , find div name correspondent to user divId
         const div = DIVISIONS.find((d) => d.id === user.divisionId);
         this.division = div ? div.name : ' ';
@@ -83,7 +90,7 @@ export class UserOverview implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/position', this.positionId]);
+    this.router.navigate(['/']);
   }
 
   editDivision() {
