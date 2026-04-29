@@ -10,6 +10,14 @@ export interface SourceCategory {
   label: string;
   items: string[];
 }
+
+export const RESPONSIBILITIES: string[] = [
+  'Responsibility1',
+  'Responsibility2',
+  'Responsibility3',
+  'Responsibility4',
+  'Responsibility5',
+];
 export interface SelectedCategory {
   key: CategoryKey;
   items: string[];
@@ -47,7 +55,6 @@ export class PositionDetail implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private communication: Communication,
   ) {}
 
   ngOnInit() {

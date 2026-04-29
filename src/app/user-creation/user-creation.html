@@ -125,37 +125,20 @@
         </div>
       </div>
 
-      <!-- Position -->
+      <!-- location -->
       <div class="field-group">
-        <h3>Position</h3>
+        <h3>Location</h3>
 
         <div class="field-row">
-          <label>Responsibility</label>
-          <select [(ngModel)]="responsibility">
+          <label>Region</label>
+          <select [(ngModel)]="region">
             <option value="">-- Select --</option>
           </select>
         </div>
 
         <div class="field-row">
-          <label>New Responsibility</label>
-          <select [(ngModel)]="newResponsibility">
-            <option value="">-- Select --</option>
-          </select>
-        </div>
-
-        <div class="field-row">
-          <label>Position</label>
-          <select [(ngModel)]="position">
-            <option value="">-- Select --</option>
-            @for (pos of positions; track pos.id) {
-              <option [value]="pos.id">{{ pos.name }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="field-row">
-          <label>Division</label>
-          <select [(ngModel)]="division">
+          <label>Office</label>
+          <select [(ngModel)]="office">
             <option value="">-- Select --</option>
           </select>
         </div>
@@ -166,48 +149,120 @@
             <option value="">-- Select --</option>
           </select>
         </div>
+      </div>
 
-        <div class="field-row checkbox-row">
-          <label>
-            <input type="checkbox" [(ngModel)]="warningEmailSentFlag" />
-            Warning Email Sent Flag
-          </label>
+      <!-- Position -->
+      <div class="field-group">
+        <h3>Position</h3>
+
+        <div class="field-row">
+          <label>Position</label>
+          <select [(ngModel)]="position" (change)="loadPositionData()">
+            <option value="">-- Select --</option>
+            @for (pos of positions; track pos.id) {
+              <option [value]="pos.id">{{ pos.name }}</option>
+            }
+          </select>
         </div>
+
+        <!-- Responsibilities -->
+        <div class="field-row">
+          <label>Responsibilities</label>
+          <div
+            style="
+              border: 1px solid #ccc;
+              min-height: 24px;
+              width: 200px;
+              padding: 4px;
+              background: #f9f9f9;
+            "
+          >
+            {{ responsibility.length > 0 ? responsibility.join(', ') : '' }}
+          </div>
+        </div>
+
+        <!-- New Responsibility -->
+        <div class="field-row">
+          <label>New Responsibility</label>
+          <div
+            style="
+              border: 1px solid #ccc;
+              min-height: 24px;
+              width: 200px;
+              padding: 4px;
+              background: #f9f9f9;
+            "
+          >
+            {{ newResponsibility }}
+          </div>
+        </div>
+
+        <!-- Division -->
+        <div class="field-row">
+          <label>Division</label>
+          <div
+            style="
+              border: 1px solid #ccc;
+              min-height: 24px;
+              width: 200px;
+              padding: 4px;
+              background: #f9f9f9;
+            "
+          >
+            {{ division }}
+          </div>
+        </div>
+
+        <!-- Supervisor -->
+        <div class="field-row">
+          <label>Supervisor</label>
+          <div
+            style="
+              border: 1px solid #ccc;
+              min-height: 24px;
+              width: 200px;
+              padding: 4px;
+              background: #f9f9f9;
+            "
+          >
+            {{ supervisor }}
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="action-row">
+          <button class="btn-save" (click)="save()">Save User</button>
+        </div>
+
+        <!-- Created Users List  -->
+        @if (createdUsers.length > 0) {
+          <div class="info-card1">
+            <div class="card-header">
+              <h3>Created Users</h3>
+              <p class="click-user">Click User Name to Show User Data:</p>
+            </div>
+
+            <div class="card-body">
+              <ul class="item-list">
+                @for (user of createdUsers; track user.id) {
+                  <li>
+                    <span
+                      class="user-name"
+                      (click)="selectUser(user)"
+                      style="cursor: pointer; margin-right: 15px"
+                      >{{ user.firstName }} {{ user.lastName }}</span
+                    >
+                    <button class="btn-back" (click)="removeUser(user.id)">Remove</button>
+                    <button class="btn-user" (click)="userRoleEdit(user)">edit user roles</button>
+                  </li>
+                } @empty {
+                  <p class="empty-text">No users created yet.</p>
+                }
+              </ul>
+            </div>
+          </div>
+        }
       </div>
     </div>
   </div>
-
-  <!-- Actions -->
-  <div class="action-row">
-    <button class="btn-save" (click)="save()">Save User</button>
-  </div>
-
-  <!-- Created Users List  -->
-  @if (createdUsers.length > 0) {
-    <div class="info-card">
-      <div class="card-header">
-        <h3>Created Users</h3>
-        <p class="click-user">Click User Name to Show User Data:</p>
-      </div>
-
-      <div class="card-body">
-        <ul class="item-list">
-          @for (user of createdUsers; track user.id) {
-            <li>
-              <span
-                class="user-name"
-                (click)="selectUser(user)"
-                style="cursor: pointer; margin-right: 15px"
-                >{{ user.firstName }} {{ user.lastName }}</span
-              >
-              <button class="btn-back" (click)="removeUser(user.id)">Remove</button>
-              <button class="btn-user" (click)="userRoleEdit(user)">edit user roles</button>
-            </li>
-          } @empty {
-            <p class="empty-text">No users created yet.</p>
-          }
-        </ul>
-      </div>
-    </div>
-  }
 </div>

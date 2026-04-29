@@ -4,7 +4,17 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Communication } from '../communication';
-import { Position, POSITION } from '../position-selection/position-selection';
+import {
+  Position,
+  POSITION,
+  SUPERVISORS,
+  Supervisor,
+  DIVISIONS,
+  Division,
+  PositionAssignment,
+} from '../position-selection/position-selection';
+import { RESPONSIBILITIES, SourceCategory } from '../position-detail/position-detail';
+import { HostListener } from '@angular/core';
 
 export interface CreatedUser {
   id: number;
@@ -22,7 +32,10 @@ export interface CreatedUser {
   userId: string;
   password: string;
   userRole: string;
-  responsibility: string;
+  region: string;
+  office: string;
+  jobTitle: string;
+  responsibility: string[];
   newResponsibility: string;
   position: string;
   division: string;
@@ -31,6 +44,7 @@ export interface CreatedUser {
   divisionId?: number;
   supervisorId?: number;
   queueIds?: number[];
+  supervisor?: string;
 }
 
 @Component({
@@ -55,10 +69,14 @@ export class UserCreation implements OnInit {
   password = '';
   confirmPassword = '';
   userRole = '';
-  responsibility = '';
+  region = '';
+  office = '';
+  jobTitle = '';
+  responsibility: string[] = [];
   newResponsibility = '';
   position = '';
-  division = '';
+  division: string = '';
+  supervisor = '';
   positionOrganization = '';
   warningEmailSentFlag = false;
 
@@ -69,6 +87,10 @@ export class UserCreation implements OnInit {
   positionId: number = 0;
 
   positions: Position[] = POSITION;
+  supervisors: Supervisor[] = SUPERVISORS;
+  responsibilities: string[] = RESPONSIBILITIES;
+  showResponsibilities = false;
+  divisions: Division[] = DIVISIONS;
 
   private subscription!: Subscription;
 
@@ -78,6 +100,10 @@ export class UserCreation implements OnInit {
   ) {}
 
   ngOnInit() {
+    const saved = localStorage.getItem('created_users');
+    if (saved) {
+      this.createdUsers = JSON.parse(saved);
+    }
     this.loadCreatedUsers();
 
     this.subscription = this.communication.currentMessage.subscribe((message) => {
@@ -112,7 +138,7 @@ export class UserCreation implements OnInit {
     this.password = user.password;
     this.confirmPassword = user.confirmPassword;
     this.userRole = user.userRole;
-    this.responsibility = user.responsibility;
+    this.responsibility = Array.isArray(user.responsibility) ? user.responsibility : [];
     this.newResponsibility = user.newResponsibility;
     this.position = user.position;
     this.division = user.division;
@@ -187,6 +213,9 @@ export class UserCreation implements OnInit {
         userId: this.userId,
         password: this.password,
         userRole: this.userRole,
+        region: this.region,
+        office: this.office,
+        jobTitle: this.jobTitle,
         responsibility: this.responsibility,
         newResponsibility: this.newResponsibility,
         position: this.position,
@@ -199,6 +228,34 @@ export class UserCreation implements OnInit {
     }
     localStorage.setItem('created_users', JSON.stringify(this.createdUsers));
     this.resetForm();
+  }
+
+  loadPositionData() {
+    //Initialized positional data
+    this.responsibility = [];
+    this.newResponsibility = '';
+    this.division = '';
+    this.supervisor = '';
+    //loads saved data that was stored in the local storage
+    const respData = localStorage.getItem(`position_${this.position}`); // use get item when parsing a string
+    if (respData) {
+      const data = JSON.parse(respData); //converts respData string into data object
+      const selectedCat = data.selected?.find((c: any) => c.key === 'selectedResponsibilities');
+      this.responsibility = selectedCat?.items || []; //loads the responsibilities that were selected and stored in local storage, if there are none it will be an empty array
+    }
+    const assignData = localStorage.getItem(`position_assignment_${this.position}`);
+    if (assignData) {
+      const data: PositionAssignment = JSON.parse(assignData); //converts assignData into data object
+
+      const div = DIVISIONS.find((d) => d.id === data.divisionId); //finds division that matches the division ID saved and stored in local storage
+      this.division = div ? div.name : ' ';
+
+      const sup = SUPERVISORS.find((s) => s.id === data.supervisorId); //finds supervisor that matches the supervisor ID saved and stored in local storage
+      this.supervisor = sup ? sup.name : ' ';
+
+      console.log('respData:', respData);
+      console.log('assignData:', assignData);
+    }
   }
 
   resetForm(): void {
@@ -216,12 +273,13 @@ export class UserCreation implements OnInit {
     this.password = '';
     this.confirmPassword = '';
     this.userRole = '';
-    this.responsibility = '';
+    this.responsibility = [];
     this.newResponsibility = '';
     this.position = '';
     this.division = '';
     this.positionOrganization = '';
     this.warningEmailSentFlag = false;
+    this.supervisor = '';
   }
 
   positionEdit() {
@@ -240,16 +298,17 @@ export class UserCreation implements OnInit {
     this.router.navigate(['/user', user.id]);
   }
 
+  //Password must contain atleast 1 of each
   get hasUpper() {
-    return /[A-Z]/.test(this.password);
+    return /[A-Z]/.test(this.password); //valid if password contains at least 1 capital letter
   }
   get hasLower() {
-    return /[a-z]/.test(this.password);
+    return /[a-z]/.test(this.password); // valid if it contains atleats 1 lowercase
   }
   get hasNumber() {
-    return /[0-9]/.test(this.password);
+    return /[0-9]/.test(this.password); // valid if has a number in password
   }
   get hasSpecial() {
-    return /[!@#$%^&*]/.test(this.password);
+    return /[!@#$%^&*]/.test(this.password); //// valid if contains special character
   }
 }

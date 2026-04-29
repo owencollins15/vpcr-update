@@ -64,6 +64,7 @@ export class QueuesComponent implements OnInit {
     }
     this.loadSavedQueue();
   }
+
   loadSavedQueue() {
     if (!this.divisionID) {
       this.availableQueues = [];
@@ -133,7 +134,7 @@ export class QueuesComponent implements OnInit {
   goBack() {
     if (this.isUserMode) {
       //navigate back to user overview
-      this.router.navigate(['/position', this.positionId, 'user', this.userId]);
+      this.router.navigate(['/user', this.userId]);
     } else {
       this.router.navigate(['/position', this.positionId]);
     }

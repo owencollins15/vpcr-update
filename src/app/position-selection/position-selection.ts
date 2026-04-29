@@ -12,16 +12,21 @@ export interface Position {
   supervisorId: number;
 }
 export const POSITION: Position[] = [
-  { id: 1, name: 'position 1', divisionId: 0, supervisorId: 0 },
-  { id: 2, name: 'position 2', divisionId: 0, supervisorId: 0 },
-  { id: 3, name: 'position 3', divisionId: 0, supervisorId: 0 },
-  { id: 4, name: 'position 4', divisionId: 0, supervisorId: 0 },
-  { id: 5, name: 'position 5', divisionId: 0, supervisorId: 0 },
-  { id: 6, name: 'position 6', divisionId: 0, supervisorId: 0 },
-  { id: 7, name: 'position 7', divisionId: 0, supervisorId: 0 },
-  { id: 8, name: 'position 8', divisionId: 0, supervisorId: 0 },
-  { id: 9, name: 'position 9', divisionId: 0, supervisorId: 0 },
-  { id: 10, name: 'position 10', divisionId: 0, supervisorId: 0 },
+  { id: 1, name: 'Call Center Rep - VPPS 1', divisionId: 0, supervisorId: 0 },
+  { id: 2, name: 'Call Center Sup - VPPS 2/3', divisionId: 0, supervisorId: 0 },
+  { id: 3, name: 'Call Center Director', divisionId: 0, supervisorId: 0 },
+  { id: 4, name: 'Infoline Agent', divisionId: 0, supervisorId: 0 },
+  { id: 5, name: 'Fulfillment Rep', divisionId: 0, supervisorId: 0 },
+  { id: 6, name: '3BDR Supervisor', divisionId: 0, supervisorId: 0 },
+  { id: 7, name: 'OSP Investigator', divisionId: 0, supervisorId: 0 },
+  { id: 8, name: 'SOAR Investigator', divisionId: 0, supervisorId: 0 },
+  { id: 9, name: 'Non-Criminal Investigator', divisionId: 0, supervisorId: 0 },
+  { id: 10, name: 'Criminal Investigator', divisionId: 0, supervisorId: 0 },
+  { id: 11, name: 'Supervising Investigator', divisionId: 0, supervisorId: 0 },
+  { id: 12, name: 'Inv. Admin. Assistant ', divisionId: 0, supervisorId: 0 },
+  { id: 13, name: 'Asst. Chief of Investigations', divisionId: 0, supervisorId: 0 },
+  { id: 14, name: 'Death Investigator', divisionId: 0, supervisorId: 0 },
+  { id: 15, name: 'Supervising Death Inv.', divisionId: 0, supervisorId: 0 },
 ];
 export interface Division {
   id: number;

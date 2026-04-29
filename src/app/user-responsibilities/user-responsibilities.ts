@@ -175,10 +175,6 @@ export class UserResponsibilities implements OnInit {
   }
 
   cancel(): void {
-    if (!this.positionId || !this.userId) {
-      console.error('Missing route params', this.positionId, this.userId);
-      return;
-    }
-    this.router.navigate(['/position', this.positionId, 'user', this.userId]);
+    this.router.navigate(['/user', this.userId]);
   }
 }

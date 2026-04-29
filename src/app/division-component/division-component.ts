@@ -101,7 +101,7 @@ export class DivisionComponent implements OnInit {
   }
   goBack() {
     if (this.isUserMode) {
-      this.router.navigate(['/position', this.positionId, 'user', this.userId]);
+      this.router.navigate(['/user', this.userId]);
     } else {
       this.router.navigate(['/position', this.positionId]);
     }
