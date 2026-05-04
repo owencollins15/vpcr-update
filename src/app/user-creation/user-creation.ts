@@ -13,8 +13,7 @@ import {
   Division,
   PositionAssignment,
 } from '../position-selection/position-selection';
-import { RESPONSIBILITIES, SourceCategory } from '../position-detail/position-detail';
-import { HostListener } from '@angular/core';
+import { RESPONSIBILITIES } from '../position-detail/position-detail';
 
 export interface CreatedUser {
   id: number;
@@ -88,7 +87,7 @@ export class UserCreation implements OnInit {
 
   positions: Position[] = POSITION;
   supervisors: Supervisor[] = SUPERVISORS;
-  responsibilities: string[] = RESPONSIBILITIES;
+  responsibilities = RESPONSIBILITIES;
   showResponsibilities = false;
   divisions: Division[] = DIVISIONS;
 
@@ -144,6 +143,7 @@ export class UserCreation implements OnInit {
     this.division = user.division;
     this.positionOrganization = user.positionOrganization;
     this.warningEmailSentFlag = user.warningEmailSentFlag;
+    this.supervisor = user.supervisor || '';
   }
 
   save(): void {
@@ -190,6 +190,7 @@ export class UserCreation implements OnInit {
               newResponsibility: this.newResponsibility,
               position: this.position,
               division: this.division,
+              supervisor: this.supervisor,
               positionOrganization: this.positionOrganization,
               warningEmailSentFlag: this.warningEmailSentFlag,
             }
@@ -220,6 +221,7 @@ export class UserCreation implements OnInit {
         newResponsibility: this.newResponsibility,
         position: this.position,
         division: this.division,
+        supervisor: this.supervisor,
         positionOrganization: this.positionOrganization,
         warningEmailSentFlag: this.warningEmailSentFlag,
       };

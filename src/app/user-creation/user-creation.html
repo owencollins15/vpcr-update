@@ -177,7 +177,11 @@
               background: #f9f9f9;
             "
           >
-            {{ responsibility.length > 0 ? responsibility.join(', ') : '' }}
+            @if (responsibility.length > 0) {
+              @for (r of responsibility; track r) {
+                <div>--- {{ r }}</div>
+              }
+            }
           </div>
         </div>
 
