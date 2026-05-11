@@ -1,0 +1,29 @@
+.position-list {
+  list-style: none;
+  padding: 0;
+}
+
+.position-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.position-row:hover {
+  background-color: #97e1f7b6;
+}
+
+.saved {
+  color: green;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+p {
+  color: #858383;
+  text-decoration: underline #858383;
+  text-underline-offset: 5px;
+}

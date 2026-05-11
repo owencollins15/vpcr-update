@@ -12,6 +12,9 @@ import { QueuesComponent } from './queues-component/queues-component';
 import { PositionSelection } from './position-selection/position-selection';
 import { UserCreation } from './user-creation/user-creation';
 
+import { Home } from './home/home';
+import { PositionList } from './position-list/position-list';
+
 export const routes: Routes = [
   { path: '', component: UserCreation },
   { path: 'CreateUser', component: UserCreation },
@@ -27,5 +30,10 @@ export const routes: Routes = [
   { path: 'position/:positionId/user/:userId/queues', component: QueuesComponent },
   { path: 'position/:positionId/user/:userId/supervisor', component: SupervisorComponent },
   { path: 'position/:positionId/user/:userId/responsibilities', component: UserResponsibilities },
+
+  { path: 'lou', component: Home },
+  { path: 'lou/position', component: PositionList },
+
   { path: '**', redirectTo: '' },
+
 ];
