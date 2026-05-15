@@ -1,0 +1,47 @@
+.form-grid {
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 16px;
+}
+
+.field-group h3 {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  gap: 5px;
+}
+
+.field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 100px;
+}
+
+span.user-name {
+  cursor: pointer;
+  text-decoration: underline 1px solid grey;
+  transition: color 0.2s;
+  &:hover {
+    color: blue;
+  }
+}
+.click-user {
+  font-size: 14px;
+  text-decoration: underline;
+}
