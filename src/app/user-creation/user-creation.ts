@@ -259,6 +259,10 @@ export class UserCreation implements OnInit {
     }
   }
 
+  home() {
+    this.router.navigate(['/home']);
+  }
+
   resetForm(): void {
     this.firstName = '';
     this.lastName = '';

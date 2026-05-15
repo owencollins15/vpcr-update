@@ -13,10 +13,9 @@ import { PositionSelection } from './position-selection/position-selection';
 import { UserCreation } from './user-creation/user-creation';
 
 import { Home } from './home/home';
-import { PositionList } from './position-list/position-list';
 
 export const routes: Routes = [
-  { path: '', component: UserCreation },
+  { path: '', component: Home },
   { path: 'CreateUser', component: UserCreation },
   { path: 'position', component: PositionSelection },
   { path: 'position/:id', component: PositionOverview },
@@ -31,9 +30,5 @@ export const routes: Routes = [
   { path: 'position/:positionId/user/:userId/supervisor', component: SupervisorComponent },
   { path: 'position/:positionId/user/:userId/responsibilities', component: UserResponsibilities },
 
-  { path: 'lou', component: Home },
-  { path: 'lou/position', component: PositionList },
-
   { path: '**', redirectTo: '' },
-
 ];

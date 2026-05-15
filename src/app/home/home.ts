@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Communication } from '../communication';
 
-
 @Component({
   selector: 'app-home',
   imports: [FormsModule, CommonModule],
