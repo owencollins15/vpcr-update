@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  DIVISIONS,
-  SUPERVISORS,
-  QUEUES,
   PositionAssignment,
-  POSITION,
+  getPositionList,
   userEntry,
 } from '../position-selection/position-selection';
 import { Subscription } from 'rxjs';
+import { getDiv } from '../division-component/division-component';
+import { getSupervisor } from '../supervisor-component/supervisor-component';
+import { getQueues } from '../queues-component/queues-component';
 
 @Component({
   selector: 'app-position-overview',
@@ -39,7 +39,7 @@ export class PositionOverview implements OnInit {
       const id = params.get('id');
       if (id) {
         this.positionId = Number(id);
-        this.positionName = POSITION.find((p) => p.id === Number(id))?.name || ''; // displays selected position name in header of position overview page , goes thru positions array matching id and returning name property , if no match found return empty string '
+        this.positionName = getPositionList().find((p) => p.id === Number(id))?.name || ''; // displays selected position name in header of position overview page , goes thru positions array matching id and returning name property , if no match found return empty string '
         this.loadPositionData(); // Reload data every time
       }
     });
@@ -64,17 +64,17 @@ export class PositionOverview implements OnInit {
     if (assignData) {
       const data: PositionAssignment = JSON.parse(assignData); //converts assignData into data object
 
-      const div = DIVISIONS.find((d) => d.id === data.divisionId); //finds division that matches the division ID saved and stored in local storage
+      const div = getDiv().find((d) => d.id === data.divisionId); //finds division that matches the division ID saved and stored in local storage
       this.division = div ? div.name : '';
 
-      const sup = SUPERVISORS.find((s) => s.id === data.supervisorId); //finds supervisor that matches the supervisor ID saved and stored in local storage
+      const sup = getSupervisor().find((s) => s.id === data.supervisorId); //finds supervisor that matches the supervisor ID saved and stored in local storage
       this.supervisor = sup ? sup.name : '';
 
       this.queues = []; //clear queue before data is loaded
       if (data.divisionId && data.queueIds) {
         for (let i = 0; i < data.queueIds.length; i++) {
           //loops through queue ids
-          const queue = QUEUES.find((q) => q.id === data.queueIds[i]); //finds queue that matches the queue ID saved and stored in local storage
+          const queue = getQueues().find((q) => q.id === data.queueIds[i]); //finds queue that matches the queue ID saved and stored in local storage
           if (queue) {
             this.queues.push(queue.name); //push queue name and display in position overview
           }

@@ -1,16 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  DIVISIONS,
-  SUPERVISORS,
-  QUEUES,
-  PositionAssignment,
-  POSITION,
-  userEntry,
-  Division,
-} from '../position-selection/position-selection';
+import { PositionAssignment, getPositionList } from '../position-selection/position-selection';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
+export interface Division {
+  id: number;
+  name: string;
+}
+
+export function getDiv() {
+  return [
+    { id: 1, name: 'SOA' },
+    { id: 2, name: 'SDMC' },
+    { id: 3, name: 'Intake' },
+    { id: 4, name: '3BDR' },
+    { id: 5, name: 'SOAR' },
+    { id: 6, name: 'Field' },
+    { id: 7, name: 'Death' },
+    { id: 8, name: 'OGC(LDU)' },
+    { id: 9, name: 'Employee Discipline' },
+    { id: 10, name: 'DeNovo' },
+    { id: 11, name: 'ALU' },
+    { id: 12, name: 'Prosecutions' },
+    { id: 13, name: 'AHU' },
+    { id: 14, name: 'OSP' },
+    { id: 15, name: 'CBC' },
+    { id: 16, name: 'IFSU' },
+    { id: 17, name: 'Forensics' },
+    { id: 18, name: 'PQI' },
+    { id: 19, name: 'Records Access' },
+  ];
+}
 
 @Component({
   selector: 'app-division-component',
@@ -25,7 +46,7 @@ export class DivisionComponent implements OnInit {
 
   selDivisionId: number = 0;
   showMessage: boolean = false;
-  divisions: Division[] = DIVISIONS;
+  divisions: Division[] = getPositionList();
   displayName: string = '';
 
   constructor(
@@ -46,7 +67,7 @@ export class DivisionComponent implements OnInit {
       //position mode
       this.isUserMode = false;
       this.positionId = Number(id);
-      const pos = POSITION.find((p) => p.id === this.positionId);
+      const pos = getPositionList().find((p) => p.id === this.positionId);
       this.displayName = pos?.name || '';
     }
     this.loadSavedDivision();

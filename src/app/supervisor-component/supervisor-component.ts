@@ -1,16 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  DIVISIONS,
-  SUPERVISORS,
-  QUEUES,
-  PositionAssignment,
-  POSITION,
-  userEntry,
-  Supervisor,
-} from '../position-selection/position-selection';
+import { PositionAssignment, getPositionList } from '../position-selection/position-selection';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
+export interface Supervisor {
+  id: number;
+  name: string;
+}
+
+export function getSupervisor() {
+  return [
+    { id: 1, name: 'supervisor 1' },
+    { id: 2, name: 'supervisor 2' },
+    { id: 3, name: 'supervisor 3' },
+    { id: 4, name: 'supervisor 4' },
+    { id: 5, name: 'supervisor 5' },
+  ];
+}
+export interface Supervisor {
+  id: number;
+  name: string;
+}
+
 @Component({
   selector: 'app-supervisor-component',
   imports: [CommonModule, FormsModule],
@@ -22,7 +34,7 @@ export class SupervisorComponent implements OnInit {
   positionName: string = ' ';
   userId: number = 0;
 
-  supervisor: Supervisor[] = SUPERVISORS; //holds array of supervisor objects imported from app.ts , this is what populates the drop down list
+  supervisor: Supervisor[] = getSupervisor(); //holds array of supervisor objects imported from app.ts , this is what populates the drop down list
   filteredSupervisors: Supervisor[] = []; //filtered results that appear in dropdown
   selSupervisorId: number = 0; //0 indicates no supervisor is selected
   supervisorSearchQuery: string = ''; // supervisor empty
@@ -50,7 +62,7 @@ export class SupervisorComponent implements OnInit {
       //position mode
       this.isUserMode = false;
       this.positionId = Number(id);
-      const pos = POSITION.find((p) => p.id === this.positionId);
+      const pos = getPositionList().find((p) => p.id === this.positionId);
       this.displayName = pos?.name || '';
     }
     this.loadSavedSupervisor();

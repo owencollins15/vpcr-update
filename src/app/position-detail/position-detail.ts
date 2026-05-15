@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { POSITION } from '../position-selection/position-selection';
+import { getPositionList } from '../position-selection/position-selection';
 
 type CategoryKey = 'selectedResponsibilities';
 
@@ -171,7 +171,6 @@ export const RESPONSIBILITIES = [
   { name: 'NYJC PQI Referral Responsibility', positionId: 11 },
   { name: 'NYJCInvToPendingReview', positionId: 11 },
   { name: 'OGC Closure Report Read Only View', positionId: 11 },
-
   //Criminal Investigator (Region 1 Criminal Inv X)
   { name: 'Criminal Investigator', positionId: 12 },
   { name: 'NYJC Case CPR Responsibility', positionId: 12 },
@@ -304,7 +303,7 @@ export class PositionDetail implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.positionId = Number(id);
-      this.positionName = POSITION.find((p) => p.id === Number(id))?.name || '';
+      this.positionName = getPositionList().find((p) => p.id === Number(id))?.name || '';
       this.source[0].items = RESPONSIBILITIES.filter((r) => r.positionId === this.positionId).map(
         (r) => r.name,
       );

@@ -4,10 +4,123 @@
   <button class="reset" (click)="resetForm()">Reset Page</button>
   <button class="btn-edit" (click)="positionEdit()">Positions View</button>
 
+  <div class="overview-container">
+    <div class="info-card">
+      <!-- Single row with 5 columns -->
+      <div
+        style="
+          display: flex;
+          padding-top: 75px;
+          flex-direction: row;
+          gap: 20px;
+          align-items: flex-start;
+        "
+      >
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px">
+          <!-- Row 1 -->
+          <div>
+            <h3>First Name</h3>
+            <input type="text" [(ngModel)]="firstName" placeholder="First Name" />
+          </div>
+
+          <div>
+            <h3>Last Name</h3>
+            <input type="text" [(ngModel)]="lastName" placeholder="Last Name" />
+          </div>
+
+          <div>
+            <h3>User ID</h3>
+            <input type="text" [(ngModel)]="userId" placeholder="User ID" />
+          </div>
+
+          <div>
+            <h3>Email</h3>
+            <input type="email" [(ngModel)]="email" placeholder="Email" />
+          </div>
+
+          <!-- Row 2 -->
+          <div>
+            <h3>Responsibility</h3>
+            <div
+              style="border: 1px solid #ccc; min-height: 24px; padding: 4px; background: #f9f9f9"
+            >
+              @if (responsibility.length > 0) {
+                @for (r of responsibility; track r) {
+                  <div>--- {{ r }}</div>
+                }
+              }
+            </div>
+          </div>
+
+          <div>
+            <h3>Position</h3>
+            <select [(ngModel)]="position" (change)="loadPositionData()">
+              <option value="">-- Select --</option>
+              @for (pos of positions; track pos.id) {
+                <option value="{{ pos.id }}">{{ pos.name }}</option>
+              }
+            </select>
+          </div>
+
+          <div>
+            <h3>Region</h3>
+            <select [(ngModel)]="region">
+              <option value="">-- Select --</option>
+            </select>
+          </div>
+
+          <div>
+            <h3>Office</h3>
+            <select [(ngModel)]="office">
+              <option value="">-- Select --</option>
+            </select>
+          </div>
+          <!-- Actions -->
+          <div class="action-row" style="margin-top: 20px">
+            <button class="btn-save" (click)="save()">Save User</button>
+          </div>
+        </div>
+
+        <!-- Created Users Search -->
+        @if (createdUsers.length > 0) {
+          <div
+            style="
+              position: fixed;
+              top: 20px;
+              right: 20px;
+              background: white;
+              padding: 10px;
+
+              z-index: 100;
+            "
+          >
+            <h3>Created Users</h3>
+            <input
+              type="text"
+              [(ngModel)]="searchQuery"
+              placeholder="Search users..."
+              style="margin-bottom: 10px; padding: 4px; width: 200px"
+            />
+
+            @if (searchQuery.length > 0) {
+              @for (user of filteredCreatedUsers(); track user.id) {
+                <div style="display: flex; align-items: center; gap: 10px; padding: 4px 0">
+                  <span (click)="selectUser(user)" style="cursor: pointer">
+                    {{ user.firstName }} {{ user.lastName }}
+                  </span>
+                  <button (click)="removeUser(user.id)">Remove</button>
+                  <button (click)="userRoleEdit(user)">Edit</button>
+                </div>
+              }
+            }
+          </div>
+        }
+
+        <!--    
   <div class="info-card">
-    <!-- Row 1: Name | Contact | Employment -->
+   
     <div class="form-grid">
-      <!-- Name -->
+      
       <div class="field-group">
         <h3>Name</h3>
 
@@ -27,7 +140,7 @@
         </div>
       </div>
 
-      <!-- Contact -->
+     
       <div class="field-group">
         <h3>Contact Information</h3>
 
@@ -47,7 +160,7 @@
         </div>
       </div>
 
-      <!-- Employment -->
+     
       <div class="field-group">
         <h3>Employment</h3>
 
@@ -81,9 +194,8 @@
 
     <hr />
 
-    <!-- Row 2: Login | Position -->
     <div class="form-grid">
-      <!-- Login -->
+    
       <div class="field-group">
         <h3>Login</h3>
 
@@ -125,7 +237,7 @@
         </div>
       </div>
 
-      <!-- location -->
+     
       <div class="field-group">
         <h3>Location</h3>
 
@@ -151,7 +263,6 @@
         </div>
       </div>
 
-      <!-- Position -->
       <div class="field-group">
         <h3>Position</h3>
 
@@ -165,7 +276,7 @@
           </select>
         </div>
 
-        <!-- Responsibilities -->
+       
         <div class="field-row">
           <label>Responsibilities</label>
           <div
@@ -185,7 +296,7 @@
           </div>
         </div>
 
-        <!-- New Responsibility -->
+      
         <div class="field-row">
           <label>New Responsibility</label>
           <div
@@ -201,7 +312,6 @@
           </div>
         </div>
 
-        <!-- Division -->
         <div class="field-row">
           <label>Division</label>
           <div
@@ -217,7 +327,7 @@
           </div>
         </div>
 
-        <!-- Supervisor -->
+    
         <div class="field-row">
           <label>Supervisor</label>
           <div
@@ -233,12 +343,10 @@
           </div>
         </div>
 
-        <!-- Actions -->
         <div class="action-row">
           <button class="btn-save" (click)="save()">Save User</button>
         </div>
 
-        <!-- Created Users List  -->
         @if (createdUsers.length > 0) {
           <div class="info-card1">
             <div class="card-header">
@@ -266,6 +374,10 @@
             </div>
           </div>
         }
+      </div>
+    </div>
+  </div>
+</div>   -->
       </div>
     </div>
   </div>

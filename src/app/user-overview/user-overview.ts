@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {
-  DIVISIONS,
-  SUPERVISORS,
-  QUEUES,
-  PositionAssignment,
-  POSITION,
-  userEntry,
-} from '../position-selection/position-selection';
+import { userEntry } from '../position-selection/position-selection';
 import { Subscription } from 'rxjs';
 import { CreatedUser } from '../user-creation/user-creation';
+import { getDiv } from '../division-component/division-component';
+import { getSupervisor } from '../supervisor-component/supervisor-component';
+import { getQueues, Queues } from '../queues-component/queues-component';
 
 @Component({
   selector: 'app-user-overview',
@@ -72,16 +68,16 @@ export class UserOverview implements OnInit {
       if (user) {
         this.userName = `${user.firstName} ${user.lastName}`;
         //if userIds match , find div name correspondent to user divId
-        const div = DIVISIONS.find((d) => d.id === user.divisionId);
+        const div = getDiv().find((d) => d.id === user.divisionId);
         this.division = div ? div.name : ' ';
         // if userIds match, find supervisor name and match with user supervisorId
-        const sup = SUPERVISORS.find((s) => s.id === user.supervisorId);
+        const sup = getSupervisor().find((s) => s.id === user.supervisorId);
         this.supervisor = sup ? sup.name : ' ';
         const queueIds = user.divisionId ? user.queueIds || [] : []; //get list of og queue ids or empty array if none exist
         this.queues = queueIds
           .map((id: number) => {
             //map queue ids to queue name filtering out not found queues
-            const q = QUEUES.find((q) => q.id === id);
+            const q = getQueues().find((q) => q.id === id);
             return q ? q.name : '';
           })
           .filter((name: string) => name !== ' ');

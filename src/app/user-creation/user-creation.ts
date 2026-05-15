@@ -6,14 +6,12 @@ import { Subscription } from 'rxjs';
 import { Communication } from '../communication';
 import {
   Position,
-  POSITION,
-  SUPERVISORS,
-  Supervisor,
-  DIVISIONS,
-  Division,
+  getPositionList,
   PositionAssignment,
 } from '../position-selection/position-selection';
 import { RESPONSIBILITIES } from '../position-detail/position-detail';
+import { getDiv, Division } from '../division-component/division-component';
+import { getSupervisor, Supervisor } from '../supervisor-component/supervisor-component';
 
 export interface CreatedUser {
   id: number;
@@ -85,11 +83,12 @@ export class UserCreation implements OnInit {
 
   positionId: number = 0;
 
-  positions: Position[] = POSITION;
-  supervisors: Supervisor[] = SUPERVISORS;
+  searchQuery: string = '';
+  positions: Position[] = getPositionList();
+  supervisors: Supervisor[] = getSupervisor();
   responsibilities = RESPONSIBILITIES;
   showResponsibilities = false;
-  divisions: Division[] = DIVISIONS;
+  divisions: Division[] = getDiv();
 
   private subscription!: Subscription;
 
@@ -249,10 +248,10 @@ export class UserCreation implements OnInit {
     if (assignData) {
       const data: PositionAssignment = JSON.parse(assignData); //converts assignData into data object
 
-      const div = DIVISIONS.find((d) => d.id === data.divisionId); //finds division that matches the division ID saved and stored in local storage
+      const div = getDiv().find((d) => d.id === data.divisionId); //finds division that matches the division ID saved and stored in local storage
       this.division = div ? div.name : ' ';
 
-      const sup = SUPERVISORS.find((s) => s.id === data.supervisorId); //finds supervisor that matches the supervisor ID saved and stored in local storage
+      const sup = getSupervisor().find((s) => s.id === data.supervisorId); //finds supervisor that matches the supervisor ID saved and stored in local storage
       this.supervisor = sup ? sup.name : ' ';
 
       console.log('respData:', respData);
@@ -286,6 +285,17 @@ export class UserCreation implements OnInit {
 
   positionEdit() {
     this.router.navigate(['/position']);
+  }
+
+  filteredCreatedUsers() {
+    if (!this.searchQuery) return this.createdUsers;
+    const query = this.searchQuery.toLowerCase();
+    return this.createdUsers.filter(
+      (u) =>
+        u.firstName.toLowerCase().includes(query) ||
+        u.lastName.toLowerCase().includes(query) ||
+        u.userId.toLowerCase().includes(query),
+    );
   }
 
   removeUser(id: number) {
