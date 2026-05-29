@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Communication } from '../communication';
@@ -14,10 +14,7 @@ import { Communication } from '../communication';
 export class Home implements OnInit {
   private subscription!: Subscription;
 
-  constructor(
-    private router: Router,
-    private communication: Communication,
-  ) {}
+  constructor(private communication: Communication) {}
 
   ngOnInit() {
     this.subscription = this.communication.currentMessage.subscribe((message) => {

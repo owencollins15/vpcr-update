@@ -9,7 +9,7 @@ import {
   getPositionList,
   PositionAssignment,
 } from '../position-selection/position-selection';
-import { RESPONSIBILITIES } from '../position-detail/position-detail';
+import { getResponsibility } from '../position-detail/position-detail';
 import { getDiv, Division } from '../division-component/division-component';
 import { getSupervisor, Supervisor } from '../supervisor-component/supervisor-component';
 
@@ -86,7 +86,7 @@ export class UserCreation implements OnInit {
   searchQuery: string = '';
   positions: Position[] = getPositionList();
   supervisors: Supervisor[] = getSupervisor();
-  responsibilities = RESPONSIBILITIES;
+  responsibilities = getResponsibility();
   showResponsibilities = false;
   divisions: Division[] = getDiv();
 
@@ -138,7 +138,7 @@ export class UserCreation implements OnInit {
     this.userRole = user.userRole;
     this.responsibility = Array.isArray(user.responsibility) ? user.responsibility : [];
     this.newResponsibility = user.newResponsibility;
-    this.position = user.position;
+    this.position =user.position;
     this.division = user.division;
     this.positionOrganization = user.positionOrganization;
     this.warningEmailSentFlag = user.warningEmailSentFlag;
@@ -146,26 +146,26 @@ export class UserCreation implements OnInit {
   }
 
   save(): void {
-    if (!this.firstName || !this.lastName || !this.userId) {
-      alert('First Name, Last Name, and User ID are required.');
-      return;
-    }
-    if (this.password !== this.confirmPassword) {
-      alert('Passwords do not match.');
-      return;
-    }
-    if (
-      !this.hasUpper ||
-      !this.hasLower ||
-      !this.hasNumber ||
-      !this.hasSpecial ||
-      this.password.length < 8
-    ) {
-      alert(
-        'Password must be 8+ characters, include both a lower and upper case letter , include a number, and a special character',
-      );
-      return;
-    }
+    // if (!this.firstName || !this.lastName || !this.userId) {
+    //   alert('First Name, Last Name, and User ID are required.');
+    //   return;
+    // }
+    // if (this.password !== this.confirmPassword) {
+    //   alert('Passwords do not match.');
+    //   return;
+    // }
+    // if (
+    //   !this.hasUpper ||
+    //   !this.hasLower ||
+    //   !this.hasNumber ||
+    //   !this.hasSpecial ||
+    //   this.password.length < 8
+    // ) {
+    //   alert(
+    //     'Password must be 8+ characters, include both a lower and upper case letter , include a number, and a special character',
+    //   );
+    //   return;
+    // }
     if (this.selUserId !== null) {
       // Update existing user
       this.createdUsers = this.createdUsers.map((u) =>
@@ -310,7 +310,7 @@ export class UserCreation implements OnInit {
   }
 
   userRoleEdit(user: CreatedUser) {
-    console.log('user role clicked', user);
+    console.log('user role clicked', user); //edit user data
     this.router.navigate(['/user', user.id]);
   }
 

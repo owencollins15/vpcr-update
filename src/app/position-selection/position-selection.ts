@@ -92,4 +92,8 @@ export class PositionSelection implements OnInit {
     console.log('back clicked');
     this.router.navigate(['/CreateUser']);
   }
+
+  home() {
+    this.router.navigate(['/home']);
+  }
 }

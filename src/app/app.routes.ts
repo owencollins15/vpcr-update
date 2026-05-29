@@ -15,20 +15,68 @@ import { UserCreation } from './user-creation/user-creation';
 import { Home } from './home/home';
 
 export const routes: Routes = [
-  { path: '', component: Home },
-  { path: 'CreateUser', component: UserCreation },
-  { path: 'position', component: PositionSelection },
-  { path: 'position/:id', component: PositionOverview },
-  { path: 'position/:id/responsibilities', component: PositionDetail },
-  { path: 'position/:id/division', component: DivisionComponent },
-  { path: 'position/:id/supervisor', component: SupervisorComponent },
-  { path: 'position/:id/queues', component: QueuesComponent },
-  { path: 'position/:id/users', component: PositionUsers },
-  { path: 'user/:userId', component: UserOverview },
-  { path: 'position/:positionId/user/:userId/division', component: DivisionComponent },
-  { path: 'position/:positionId/user/:userId/queues', component: QueuesComponent },
-  { path: 'position/:positionId/user/:userId/supervisor', component: SupervisorComponent },
-  { path: 'position/:positionId/user/:userId/responsibilities', component: UserResponsibilities },
+  { path: '', loadComponent: () => import('./home/home').then((m) => m.Home) },
+  {
+    path: 'CreateUser',
+    loadComponent: () => import('./user-creation/user-creation').then((m) => m.UserCreation),
+  },
+  {
+    path: 'position',
+    loadComponent: () =>
+      import('./position-selection/position-selection').then((m) => m.PositionSelection),
+  },
+  {
+    path: 'position/:id',
+    loadComponent: () =>
+      import('./position-overview/position-overview').then((m) => m.PositionOverview),
+  },
+  {
+    path: 'position/:id/responsibilities',
+    loadComponent: () => import('./position-detail/position-detail').then((m) => m.PositionDetail),
+  },
+  {
+    path: 'position/:id/division',
+    loadComponent: () =>
+      import('./division-component/division-component').then((m) => m.DivisionComponent),
+  },
+  {
+    path: 'position/:id/supervisor',
+    loadComponent: () =>
+      import('./supervisor-component/supervisor-component').then((m) => m.SupervisorComponent),
+  },
+  {
+    path: 'position/:id/queues',
+    loadComponent: () =>
+      import('./queues-component/queues-component').then((m) => m.QueuesComponent),
+  },
+  {
+    path: 'position/:id/users',
+    loadComponent: () => import('./position-users/position-users').then((m) => m.PositionUsers),
+  },
+  {
+    path: 'user/:userId',
+    loadComponent: () => import('./user-overview/user-overview').then((m) => m.UserOverview),
+  },
+  {
+    path: 'position/:positionId/user/:userId/division',
+    loadComponent: () =>
+      import('./division-component/division-component').then((m) => m.DivisionComponent),
+  },
+  {
+    path: 'position/:positionId/user/:userId/queues',
+    loadComponent: () =>
+      import('./queues-component/queues-component').then((m) => m.QueuesComponent),
+  },
+  {
+    path: 'position/:positionId/user/:userId/supervisor',
+    loadComponent: () =>
+      import('./supervisor-component/supervisor-component').then((m) => m.SupervisorComponent),
+  },
+  {
+    path: 'position/:positionId/user/:userId/responsibilities',
+    loadComponent: () =>
+      import('./user-responsibilities/user-responsibilities').then((m) => m.UserResponsibilities),
+  },
 
   { path: '**', redirectTo: '' },
 ];
