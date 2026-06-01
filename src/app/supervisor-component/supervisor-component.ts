@@ -98,7 +98,7 @@ export class SupervisorComponent implements OnInit {
     } else {
       this.filteredSupervisors = this.supervisor.filter(
         (
-          s, //otherwise, filter the list to only characters typed in search box
+          s, //otherwise filter the list to only characters typed in search box
         ) => s.name.toLowerCase().includes(query),
       );
     }
