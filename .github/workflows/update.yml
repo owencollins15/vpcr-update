@@ -20,7 +20,7 @@ jobs:
 
       - name: Build
         run: npm run build  
-             echo "hi owen"
+             
              
 
       - name: Upload build artifact
