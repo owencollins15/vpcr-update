@@ -19,7 +19,9 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: npm run build  
+             echo "hi owen"
+             
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
