@@ -1,0 +1,1 @@
+import{H as s,g as t}from"./chunk-DPOHKAAB.js";var a=class e{messageSource=new t("");currentMessage=this.messageSource.asObservable();constructor(){}updatedMessage(r){this.messageSource.next(r)}static \u0275fac=function(o){return new(o||e)};static \u0275prov=s({token:e,factory:e.\u0275fac,providedIn:"root"})};export{a};

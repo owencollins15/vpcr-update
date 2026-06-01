@@ -46,11 +46,11 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all",
-              "namedChunks": true
+              "outputHashing": "none",
+              "namedChunks": true,
+              "optimization": true
             },
             "development": {
-              "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
             }
